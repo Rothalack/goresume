@@ -1,0 +1,15 @@
+{{define "head"}}
+    <style>
+        .hello{ color: red;}
+        hr{ border: 1px #ccc dashed;}
+    </style>
+{{end}}
+{{define "content"}}
+    <a href="/"><- Back home!</a>
+    <hr>
+    This page not use master, Render code:
+    <pre>goview.Render(w, http.StatusOK, "resume.html", goview.M{"title": "Page file title!!"})</pre>
+    <br>
+    "page.html" - add extension  ".html" will render without master.
+    <hr>
+{{end}}

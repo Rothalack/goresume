@@ -1,0 +1,49 @@
+<!-- /views/admin/master.html -->
+<!doctype html>
+
+<html>
+    <head>
+        <title>{{.title}}</title>
+        {{template "head" .}}
+        <link href="/static/css/output.css" rel="stylesheet" />
+        <!-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> -->
+        <script src="https://kit.fontawesome.com/b7634a1a6c.js" crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+        <div class="min-h-screen bg-gray-800 text-gray-100">
+            <!-- Header -->
+            <header class="p-4 bg-gray-700 text-white">
+                <a href="/" class="active">
+                    <button class="mt-4 px-6 py-2 bg-gray-600 text-white rounded hover:bg-gray-500">
+                        Home
+                    </button>
+                </a>
+                <a href="/resume">
+                    <button class="mt-4 px-6 py-2 bg-gray-600 text-white rounded hover:bg-gray-500">
+                        Resume
+                    </button>
+                </a>
+                <a href="/gamin">
+                    <button class="mt-4 px-6 py-2 bg-gray-600 text-white rounded hover:bg-gray-500">
+                        Gamin'
+                    </button>
+                </a>
+                <!-- <a href="/cars">Cars</a> -->
+            </header>
+            <!-- Main Content -->
+            <main class="p-8">
+                {{template "content" .}}
+                <!-- Hero Section -->
+            </main>
+          </div>
+        <div>
+            <!-- <h3 class="text-slate-900 dark:text-white mt-5 text-base font-medium tracking-tight">Brian Schaaf</h3>
+            <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">
+              Test data woot woot
+            </p> -->
+            {{include "layouts/footer"}}
+        </div>
+    </body>
+</html>
