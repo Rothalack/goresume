@@ -303,7 +303,7 @@ module.exports = {
       DEFAULT: '1',
     },
     fontFamily: {
-      sans: ['Oswald', 'sans-serif'],
+      sans: ['Roboto', 'sans-serif'],
     },
     fontSize: {
       xs: ['0.75rem', { lineHeight: '1rem' }],
