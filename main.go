@@ -7,12 +7,6 @@ import (
 
 	"github.com/foolin/goview/supports/ginview"
 	"github.com/gin-gonic/gin"
-	"golang.org/x/oauth2"
-)
-
-var (
-	oauth2Config *oauth2.Config
-	oauth2Token  *oauth2.Token
 )
 
 func main() {
@@ -22,6 +16,11 @@ func main() {
 
 	router.Static("/static", "./static")
 	router.StaticFile("/favicon.ico", "./static/images/favicon.ico")
+	router.StaticFile("/sitemap.xml", "./sitemap.xml")
+	router.StaticFile("/security.txt", "./security.txt")
+	router.StaticFile("/.well-known/security.txt", "./security.txt")
+	router.StaticFile("/humans.txt", "./humans.txt")
+	router.StaticFile("/ads.txt", "./ads.txt")
 
 	router.GET("/", func(ctx *gin.Context) {
 		ctx.HTML(http.StatusOK, "home", gin.H{
@@ -84,6 +83,12 @@ func main() {
 	if err := server.ListenAndServeTLS("", ""); err != nil {
 		log.Fatalf("Failed to start server: %v", err)
 	}
+
+	// certFile := "./keys/cert.pem"
+	// keyFile := "./keys/cert.key"
+	// if err := router.RunTLS(":4443", certFile, keyFile); err != nil {
+	// 	log.Fatalf("Failed to start server: %v", err)
+	// }
 
 	// router.Run("0.0.0.0:8080")
 }
