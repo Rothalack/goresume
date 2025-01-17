@@ -2,3 +2,10 @@ node_modules/
 keys/
 tmp/
 .env
+.bash_history
+.cache/
+.vscode-server/
+.wget-hsts
+goresumegin
+snap
+.config/
