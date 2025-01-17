@@ -83,14 +83,6 @@ func main() {
 	if err := server.ListenAndServeTLS("", ""); err != nil {
 		log.Fatalf("Failed to start server: %v", err)
 	}
-
-	// certFile := "./keys/cert.pem"
-	// keyFile := "./keys/cert.key"
-	// if err := router.RunTLS(":4443", certFile, keyFile); err != nil {
-	// 	log.Fatalf("Failed to start server: %v", err)
-	// }
-
-	// router.Run("0.0.0.0:8080")
 }
 
 func loadCertificate(certFile, keyFile string) tls.Certificate {
