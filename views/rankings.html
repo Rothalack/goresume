@@ -1,0 +1,126 @@
+{{define "head"}}
+
+{{end}}
+
+{{define "content"}}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 ml-32 mr-32">
+        <div class="col-span-2 p-8 bg-gray-800 shadow rounded">
+            <div id="guild-info" class="space-y-4"></div>
+            <div id="guild-form" class="max-w-sm mx-auto">
+                <div class="mb-5">
+                    <label for="guild" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Guild Name</label>
+                    <input type="text" id="guild" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="COZY" required />
+                </div>
+                <div class="mb-5">
+                    <label for="guildServer" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Guild Server</label>
+                    <input type="text" id="guildServer" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="COZY" required />
+                </div>
+                <div class="mb-5">
+                    <label for="guildRegion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Region</label>
+                    <select id="guildRegion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option>US</option>
+                        <option>EU</option>
+                    </select>
+                </div>
+
+                <div class="mb-5">
+                    <label for="game" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Game</label>
+                    <select id="game" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option>The War Within</option>
+                        <option>Classic Cataclysm</option>
+                        <option>Classic Wrath of the Lich King</option>
+                        <option>Classic Burning Crusade</option>
+                        <option>Classic Vanilla</option>
+                        <option>Classic Fresh</option>
+                        <option>Season of Discovery</option>
+                        <option>Classic Era</option>
+                        <option>Hardcore</option>
+                    </select>
+                </div>
+                <button id="find-guild" class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-blue-800">Find Guild</button>
+            </div>
+        </div>
+        <div class="col-span-2 p-8 bg-gray-800 shadow rounded">
+            <h2 class="text-2xl mt-2 mb-5">Characters</h2>
+            <div id="characters" class="space-y-4"></div>
+            <div class="max-w-sm mx-auto mt-5">
+                <div class="mb-5">
+                    <label for="character-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Character Name</label>
+                    <input type="text" id="character-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Frothy" value="" required />
+                </div>
+                <button id="add-character" class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-blue-800">Find Character</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Find guild
+        document.getElementById('find-guild').addEventListener('click', function () {
+            const guildName = document.getElementById('guild').value;
+            const guildServer = document.getElementById('guildServer').value;
+
+            fetch(`/api/find-guild?guild=${guildName}&guildServer=${guildServer}`)
+                .then(response => response.json())
+                .then(data => {
+                    const guildInfo = document.getElementById('guild-info');
+                    guildInfo.classList.remove('hidden');
+                    guildInfo.className = 'p-4 bg-gray-900 rounded shadow text-white';
+                    guildInfo.innerHTML = `
+                        <h3 class="text-2xl font-bold">${data.guildName}</h3>
+                        <p>Region: ${data.region}</p>
+                        <p>Realm: ${data.realm}</p>
+                    `;
+                })
+                .catch(err => console.error('Error fetching guild:', err));
+
+            const guildForm = document.getElementById('guild-form');
+            guildForm.style.display = 'none';
+        });
+
+        document.getElementById('add-character').addEventListener('click', async (event) => {
+            event.preventDefault();
+
+            const input = document.getElementById('character-name');
+            const characterName = input.value.trim();
+
+            if (!characterName) {
+                alert('Please enter a character name.');
+                return;
+            }
+
+            try {
+                // Simulate fetching character data from an API
+                const response = await fetch('/api/add-character', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `character=${characterName}`,
+                })
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch character data for ${characterName}`);
+                }
+
+                const data = await response.json();
+
+                // Create a new div for the character display
+                const characterDiv = document.createElement('div');
+                characterDiv.className = 'p-4 bg-gray-900 rounded shadow text-white';
+                characterDiv.innerHTML = `
+                    <h3 class="text-2xl font-bold">${data.name}</h3>
+                    <p>Level: ${data.level}</p>
+                    <p>Class: ${data.class}</p>
+                    <p>Guild: ${data.guild}</p>
+                `;
+
+                // Append the new character div
+                document.getElementById('characters').appendChild(characterDiv);
+
+                // Clear the input field
+                input.value = '';
+            } catch (error) {
+                console.error(error);
+                alert('Error fetching character data. Please try again.');
+            }
+        });
+    </script>
+{{end}}

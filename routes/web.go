@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"goresume/controllers/warcraftlogs"
 	"net/http"
 
 	"github.com/foolin/goview/supports/ginview"
@@ -51,6 +52,47 @@ func Routes(router *gin.Engine) {
 	router.GET("/cars", func(ctx *gin.Context) {
 		ctx.HTML(http.StatusOK, "cars", gin.H{
 			"title": "Cars",
+		})
+	})
+
+	router.GET("/rankings", func(ctx *gin.Context) {
+		ctx.HTML(http.StatusOK, "rankings", gin.H{
+			"title": "Rankings",
+		})
+	})
+
+	router.GET("/api/find-guild", func(c *gin.Context) {
+		// warcraftlogs.GetRegions()
+		// warcraftlogs.GetServersFromRegion(6, 100, 1)
+		warcraftlogs.GetGuild()
+
+		// guildName := c.Query("guild")
+		// guildServer := c.Query("guildServer")
+
+		// data, err := warcraftlogs.GetGuild(guildName, guildServer)
+		// if err != nil {
+		// 	log.Fatalf("Failed to get guild data: %v", err)
+		// }
+		// fmt.Println(data)
+		// c.JSON(http.StatusOK, gin.H{
+		// 	"guildName": guildName,
+		// 	"region":    "US",
+		// 	"realm":     "Stormrage",
+		// })
+	})
+
+	router.POST("/api/add-character", func(c *gin.Context) {
+		charName := c.PostForm("character")
+
+		// For now, return mock data
+
+		// data := warcraftlogs.GetCharacter()
+		// fmt.Println(data)
+		c.JSON(http.StatusOK, gin.H{
+			"name":  charName,
+			"level": 60,
+			"class": "Mage",
+			"guild": charName,
 		})
 	})
 }
