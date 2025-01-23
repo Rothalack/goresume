@@ -12,18 +12,19 @@
                     <input type="text" id="guild" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="COZY" required />
                 </div>
                 <div class="mb-5">
-                    <label for="guildServer" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Guild Server</label>
-                    <input type="text" id="guildServer" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="COZY" required />
+                    <label for="guildRegion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Region</label>
+                    <select id="guildRegion" onchange="fetchServers(this.value)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="">Select Region</option>
+                    </select>
                 </div>
                 <div class="mb-5">
-                    <label for="guildRegion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Region</label>
-                    <select id="guildRegion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option>US</option>
-                        <option>EU</option>
+                    <label for="server" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Server:</label>
+                    <select id="server-dropdown" name="server" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="">Select Server</option>
                     </select>
                 </div>
 
-                <div class="mb-5">
+                <!-- <div class="mb-5">
                     <label for="game" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Game</label>
                     <select id="game" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option>The War Within</option>
@@ -36,7 +37,7 @@
                         <option>Classic Era</option>
                         <option>Hardcore</option>
                     </select>
-                </div>
+                </div> -->
                 <button id="find-guild" class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-blue-800">Find Guild</button>
             </div>
         </div>
@@ -53,6 +54,46 @@
         </div>
     </div>
     <script>
+        fetchRegions();
+        function fetchRegions() {
+            console.log('we here');
+            fetch(`/api/find-regions`)
+                .then(response => response.json())
+                .then(data => {
+                    const regions = data.data.worldData.regions.data;
+                    renderRegionsDropdown(regions);
+                })
+                .catch(err => console.error('Error fetching regions: ', err))
+        }
+        function renderRegionsDropdown(regions){
+            const dropdown = document.getElementById('guildRegion');
+            dropdown.innerHTML = '';
+            regions.forEach((region) => {
+                const option = document.createElement('option');
+                option.value = region.id
+                option.textContent = region.name
+                dropdown.appendChild(option);
+            });
+        }
+        function fetchServers(regionId){
+            fetch(`/api/find-server?regionId=${regionId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const servers = data.data.worldData.region.servers.data;
+                    renderServersDropdown(servers);
+                })
+                .catch(err => console.error('Error fetching servers: ', err));
+        }
+        function renderServersDropdown(servers) {
+            const dropdown = document.getElementById('guildServer');
+            dropdown.innerHTML = ''; // Clear existing options
+            servers.forEach((server) => {
+                const option = document.createElement('option');
+                option.value = server.slug;
+                option.textContent = server.name;
+                dropdown.appendChild(option);
+            });
+        }
         // Find guild
         document.getElementById('find-guild').addEventListener('click', function () {
             const guildName = document.getElementById('guild').value;

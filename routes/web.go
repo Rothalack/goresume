@@ -2,6 +2,7 @@ package routes
 
 import (
 	"goresume/controllers/warcraftlogs"
+	"log"
 	"net/http"
 
 	"github.com/foolin/goview/supports/ginview"
@@ -61,10 +62,29 @@ func Routes(router *gin.Engine) {
 		})
 	})
 
+	router.GET("/api/find-regions", func(c *gin.Context) {
+		data, err := warcraftlogs.GetRegions()
+		if err != nil {
+			log.Fatalf("Failed to get region data: %v", err)
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"data": data,
+		})
+	})
+
+	router.GET("/api/find-server", func(c *gin.Context) {
+		guildRegion := c.Query("regionId")
+
+		warcraftlogs.GetServersFromRegion(guildRegion)
+	})
+
 	router.GET("/api/find-guild", func(c *gin.Context) {
+		// guildName := c.Query("guild")
+		// guildServer := c.Query("guildServer")
+
 		// warcraftlogs.GetRegions()
 		// warcraftlogs.GetServersFromRegion(6, 100, 1)
-		warcraftlogs.GetGuild()
+		// warcraftlogs.GetGuild()
 
 		// guildName := c.Query("guild")
 		// guildServer := c.Query("guildServer")

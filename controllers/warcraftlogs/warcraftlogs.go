@@ -33,6 +33,22 @@ type Guild struct {
 	ZoneRanking GuildZoneRankings `json:"zoneRanking"`
 }
 
+type Region struct {
+	ID   int    `json:"id"`
+	Name string `json:"name"`
+	Slug string `json:"slug"`
+}
+
+type WorldData struct {
+	Regions []Region `json:"regions"`
+}
+
+type RegionsResponse struct {
+	Data struct {
+		WorldData WorldData `json:"worldData"`
+	} `json:"data"`
+}
+
 // Server represents a WoW server
 type Server struct {
 	ID     int    `json:"id"`
@@ -231,7 +247,7 @@ func GetGuild() {
 	// return &resp.GuildData.Guild, nil
 }
 
-func GetRegions() {
+func GetRegions() ([]Region, error) {
 	accessToken, err := getAccessToken()
 	if err != nil {
 		log.Fatalf("Failed to get access token: %v", err)
@@ -247,15 +263,21 @@ func GetRegions() {
 					name
 					slug
 				}
+				expansions {
+					id
+					name
+				}
 			}
 		}
 	`)
 
 	req.Header.Set("Authorization", "Bearer "+accessToken)
 
-	var resp map[string]interface{}
+	// var resp map[string]interface{}
+
+	var resp RegionsResponse
 	if err := client.Run(context.Background(), req, &resp); err != nil {
-		log.Printf("querying guild: %v", err)
+		return nil, fmt.Errorf("error querying regions: %w", err)
 	}
 
 	prettyJSON, err := json.MarshalIndent(resp, "", "    ")
@@ -264,9 +286,23 @@ func GetRegions() {
 	} else {
 		fmt.Printf("\n=== Query Response ===\n%s\n", string(prettyJSON))
 	}
+
+	return resp.Data.WorldData.Regions, nil
+
+	// var resp map[string]interface{}
+	// if err := client.Run(context.Background(), req, &resp); err != nil {
+	// 	log.Printf("querying guild: %v", err)
+	// }
+
+	// prettyJSON, err := json.MarshalIndent(resp, "", "    ")
+	// if err != nil {
+	// 	log.Printf("Error pretty printing JSON: %v", err)
+	// } else {
+	// 	fmt.Printf("\n=== Query Response ===\n%s\n", string(prettyJSON))
+	// }
 }
 
-func GetServersFromRegion(regionID int, limit int, page int) {
+func GetServersFromRegion(regionID string) {
 	accessToken, err := getAccessToken()
 	if err != nil {
 		log.Fatalf("Failed to get access token: %v", err)
@@ -275,10 +311,10 @@ func GetServersFromRegion(regionID int, limit int, page int) {
 	client := graphql.NewClient(apiURL)
 
 	req := graphql.NewRequest(`
-		query ServersQuery($regionID: Int!, $limit: Int, $page: Int) {
+		query ServersQuery($regionID: Int!) {
 			worldData {
 				region(id: $regionID) {
-					servers(limit: $limit, page: $page) {
+					servers(limit: 1000) {
 						data {
 							id
 							name
@@ -295,8 +331,6 @@ func GetServersFromRegion(regionID int, limit int, page int) {
 
 	// Set variables for the query
 	req.Var("regionID", regionID)
-	req.Var("limit", limit)
-	req.Var("page", page)
 
 	req.Header.Set("Authorization", "Bearer "+accessToken)
 
