@@ -1,8 +1,5 @@
 {
   "devDependencies": {
     "tailwindcss": "^3.4.17"
-  },
-  "dependencies": {
-    "@fontsource/oswald": "^5.1.1"
   }
 }
