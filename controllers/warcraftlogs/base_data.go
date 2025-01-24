@@ -90,10 +90,10 @@ func GetExpansions() ([]Expansion, error) {
 	client := graphql.NewClient(ApiUrl)
 
 	req := graphql.NewRequest(`
-        query {
-            worldData {
-                expansions {
-                    id
+		query {
+			worldData {
+				expansions {
+					id
 					name
 					zones {
 						id
@@ -102,7 +102,7 @@ func GetExpansions() ([]Expansion, error) {
 							name
 							sizes
 						}
-						name
+					name
 						partitions {
 							id
 							name
@@ -110,10 +110,10 @@ func GetExpansions() ([]Expansion, error) {
 							default
 						}
 					}
-                }
-            }
-        }
-    `)
+				}
+			}
+		}
+	`)
 
 	req.Header.Set("Authorization", "Bearer "+accessToken)
 	req.Header.Set("Content-Type", "application/json")
@@ -137,15 +137,15 @@ func GetZoneIds() (*RegionsResponse, error) {
 	client := graphql.NewClient(ApiUrl)
 
 	req := graphql.NewRequest(`
-        query {
-            worldData {
-                zones {
-                    id
-                    slug
-                }
-            }
-        }
-    `)
+		query {
+			worldData {
+				zones {
+					id
+					slug
+				}
+			}
+		}
+	`)
 
 	req.Header.Set("Authorization", "Bearer "+accessToken)
 	req.Header.Set("Content-Type", "application/json")
@@ -169,17 +169,17 @@ func GetRegions() ([]Region, error) {
 	client := graphql.NewClient(ApiUrl)
 
 	req := graphql.NewRequest(`
-        query {
-            worldData {
-                regions {
-                    id
+		query {
+			worldData {
+				regions {
+					id
 					compactName
 					name
-                    slug
-                }
-            }
-        }
-    `)
+					slug
+				}
+			}
+		}
+	`)
 
 	req.Header.Set("Authorization", "Bearer "+accessToken)
 	req.Header.Set("Content-Type", "application/json")
