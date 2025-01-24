@@ -4,11 +4,11 @@ import (
 	"time"
 )
 
-type User struct {
+type Game struct {
 	Id        int       `db:"id,key,auto"`
-	Name      string    `db:"name"`
-	Email     string    `db:"email"`
-	Password  string    `db:"email"`
+	GameName  string    `db:"game_name"`
+	ApiUrl    string    `db:"api_url"`
+	Note      string    `db:"note"`
 	CreatedAt time.Time `db:"created_at"`
 	UpdatedAt time.Time `db:"updated_at"`
 }

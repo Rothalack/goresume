@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS expansions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    game_id INT NOT NULL,
+    expansion_id INT NOT NULL,
+    expansion_name VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY (game_id, expansion_id),
+    FOREIGN KEY (game_id) REFERENCES games(id) ON DELETE CASCADE
+);

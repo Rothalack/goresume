@@ -1,8 +1,8 @@
 package routes
 
 import (
+	"fmt"
 	"goresume/controllers/warcraftlogs"
-	"log"
 	"net/http"
 
 	"github.com/foolin/goview/supports/ginview"
@@ -62,43 +62,77 @@ func Routes(router *gin.Engine) {
 		})
 	})
 
-	router.GET("/api/find-regions", func(c *gin.Context) {
-		data, err := warcraftlogs.GetRegions()
+	// router.GET("/api/find-regions", func(c *gin.Context) {
+	// 	resp, err := warcraftlogs.GetRegions()
+	// 	if err != nil {
+	// 		c.JSON(http.StatusInternalServerError, gin.H{
+	// 			"error": err.Error(),
+	// 		})
+	// 		return
+	// 	}
+	// 	c.JSON(http.StatusOK, gin.H{
+	// 		"data": resp.WorldData,
+	// 	})
+	// })
+
+	router.GET("/api/find-expansions", func(c *gin.Context) {
+		resp, err := warcraftlogs.GetExpansions()
 		if err != nil {
-			log.Fatalf("Failed to get region data: %v", err)
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"error": err.Error(),
+			})
+			return
 		}
 		c.JSON(http.StatusOK, gin.H{
-			"data": data,
+			"data": resp,
 		})
 	})
 
-	router.GET("/api/find-server", func(c *gin.Context) {
-		guildRegion := c.Query("regionId")
+	// router.GET("/api/find-server", func(c *gin.Context) {
+	// 	regionIdStr := c.Query("regionId")
 
-		warcraftlogs.GetServersFromRegion(guildRegion)
-	})
+	// 	regionId, err := strconv.Atoi(regionIdStr)
+	// 	if err != nil {
+	// 		c.JSON(http.StatusBadRequest, gin.H{
+	// 			"error": "Invalid Region",
+	// 		})
+	// 		return
+	// 	}
+
+	// 	serversResp, err := warcraftlogs.GetServersFromRegion(regionId)
+	// 	if err != nil {
+	// 		c.JSON(http.StatusInternalServerError, gin.H{
+	// 			"error": err.Error(),
+	// 		})
+	// 		return
+	// 	}
+
+	// 	c.JSON(http.StatusOK, gin.H{
+	// 		"data": serversResp.WorldData.Region.Servers.Data,
+	// 	})
+	// })
 
 	router.GET("/api/find-guild", func(c *gin.Context) {
-		// guildName := c.Query("guild")
-		// guildServer := c.Query("guildServer")
+		guildName := c.Query("guild")
+		guildRegion := c.Query("guildRegion")
+		guildServer := c.Query("guildServer")
 
-		// warcraftlogs.GetRegions()
-		// warcraftlogs.GetServersFromRegion(6, 100, 1)
-		// warcraftlogs.GetGuild()
+		data, err := warcraftlogs.GetGuild(guildName, guildRegion, guildServer)
 
-		// guildName := c.Query("guild")
-		// guildServer := c.Query("guildServer")
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
 
-		// data, err := warcraftlogs.GetGuild(guildName, guildServer)
-		// if err != nil {
-		// 	log.Fatalf("Failed to get guild data: %v", err)
-		// }
-		// fmt.Println(data)
-		// c.JSON(http.StatusOK, gin.H{
-		// 	"guildName": guildName,
-		// 	"region":    "US",
-		// 	"realm":     "Stormrage",
-		// })
+		fmt.Println(data)
+
+		c.JSON(http.StatusOK, gin.H{
+			"guildName": guildName,
+			"region":    guildRegion,
+			"realm":     guildServer,
+		})
 	})
 
 	router.POST("/api/add-character", func(c *gin.Context) {

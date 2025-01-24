@@ -5,7 +5,7 @@ import (
 )
 
 type Guild struct {
-	ID        int       `db:"id"`
+	Id        int       `db:"id"`
 	GuildName string    `db:"guild_name"`
 	GuildID   int       `db:"guild_id"`
 	CreatedAt time.Time `db:"created_at"`
