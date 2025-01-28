@@ -4,6 +4,6 @@ CREATE TABLE IF NOT EXISTS sizes (
     size VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    UNIQUE KEY (id, difficulty_id),
-    FOREIGN KEY (difficulty_id) REFERENCES difficulties(id) ON DELETE CASCADE
+    UNIQUE KEY (size, difficulty_id),
+    FOREIGN KEY (difficulty_id) REFERENCES difficulties(difficulty_id) ON DELETE CASCADE
 );

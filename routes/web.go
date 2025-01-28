@@ -1,16 +1,27 @@
 package routes
 
 import (
-	"fmt"
 	"goresume/controllers/warcraftlogs"
+	"html/template"
 	"net/http"
 
+	"github.com/foolin/goview"
 	"github.com/foolin/goview/supports/ginview"
 	"github.com/gin-gonic/gin"
 )
 
 func Routes(router *gin.Engine) {
-	router.HTMLRender = ginview.Default()
+	var CustomConfig = goview.Config{
+		Root:         "resources/views",
+		Extension:    ".html",
+		Master:       "layouts/master",
+		Partials:     []string{},
+		Funcs:        make(template.FuncMap),
+		DisableCache: false,
+		Delims:       goview.Delims{Left: "{{", Right: "}}"},
+	}
+
+	router.HTMLRender = ginview.New(CustomConfig)
 
 	router.Static("/static", "./static")
 	router.StaticFile("/favicon.ico", "./static/images/favicon.ico")
@@ -38,23 +49,23 @@ func Routes(router *gin.Engine) {
 		})
 	})
 
-	router.GET("/tools", func(ctx *gin.Context) {
-		ctx.HTML(http.StatusOK, "tools", gin.H{
-			"title": "Tools",
-		})
-	})
+	// router.GET("/tools", func(ctx *gin.Context) {
+	// 	ctx.HTML(http.StatusOK, "tools", gin.H{
+	// 		"title": "Tools",
+	// 	})
+	// })
 
-	router.GET("/gamin", func(ctx *gin.Context) {
-		ctx.HTML(http.StatusOK, "gamin", gin.H{
-			"title": "Gamin",
-		})
-	})
+	// router.GET("/gamin", func(ctx *gin.Context) {
+	// 	ctx.HTML(http.StatusOK, "gamin", gin.H{
+	// 		"title": "Gamin",
+	// 	})
+	// })
 
-	router.GET("/cars", func(ctx *gin.Context) {
-		ctx.HTML(http.StatusOK, "cars", gin.H{
-			"title": "Cars",
-		})
-	})
+	// router.GET("/cars", func(ctx *gin.Context) {
+	// 	ctx.HTML(http.StatusOK, "cars", gin.H{
+	// 		"title": "Cars",
+	// 	})
+	// })
 
 	router.GET("/rankings", func(ctx *gin.Context) {
 		ctx.HTML(http.StatusOK, "rankings", gin.H{
@@ -75,8 +86,8 @@ func Routes(router *gin.Engine) {
 	// 	})
 	// })
 
-	router.GET("/api/find-expansions", func(c *gin.Context) {
-		resp, err := warcraftlogs.GetExpansions()
+	router.GET("/api/logs-data", func(c *gin.Context) {
+		resp, err := warcraftlogs.GetData()
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{
 				"error": err.Error(),
@@ -87,6 +98,19 @@ func Routes(router *gin.Engine) {
 			"data": resp,
 		})
 	})
+
+	// router.GET("/api/find-expansions", func(c *gin.Context) {
+	// 	resp, err := warcraftlogs.GetExpansions()
+	// 	if err != nil {
+	// 		c.JSON(http.StatusInternalServerError, gin.H{
+	// 			"error": err.Error(),
+	// 		})
+	// 		return
+	// 	}
+	// 	c.JSON(http.StatusOK, gin.H{
+	// 		"data": resp,
+	// 	})
+	// })
 
 	// router.GET("/api/find-server", func(c *gin.Context) {
 	// 	regionIdStr := c.Query("regionId")
@@ -112,41 +136,41 @@ func Routes(router *gin.Engine) {
 	// 	})
 	// })
 
-	router.GET("/api/find-guild", func(c *gin.Context) {
-		guildName := c.Query("guild")
-		guildRegion := c.Query("guildRegion")
-		guildServer := c.Query("guildServer")
+	// router.GET("/api/find-guild", func(c *gin.Context) {
+	// 	guildName := c.Query("guild")
+	// 	guildRegion := c.Query("guildRegion")
+	// 	guildServer := c.Query("guildServer")
 
-		data, err := warcraftlogs.GetGuild(guildName, guildRegion, guildServer)
+	// 	data, err := warcraftlogs.GetGuild(guildName, guildRegion, guildServer)
 
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{
-				"error": err.Error(),
-			})
-			return
-		}
+	// 	if err != nil {
+	// 		c.JSON(http.StatusInternalServerError, gin.H{
+	// 			"error": err.Error(),
+	// 		})
+	// 		return
+	// 	}
 
-		fmt.Println(data)
+	// 	fmt.Println(data)
 
-		c.JSON(http.StatusOK, gin.H{
-			"guildName": guildName,
-			"region":    guildRegion,
-			"realm":     guildServer,
-		})
-	})
+	// 	c.JSON(http.StatusOK, gin.H{
+	// 		"guildName": guildName,
+	// 		"region":    guildRegion,
+	// 		"realm":     guildServer,
+	// 	})
+	// })
 
-	router.POST("/api/add-character", func(c *gin.Context) {
-		charName := c.PostForm("character")
+	// router.POST("/api/add-character", func(c *gin.Context) {
+	// 	charName := c.PostForm("character")
 
-		// For now, return mock data
+	// 	// For now, return mock data
 
-		// data := warcraftlogs.GetCharacter()
-		// fmt.Println(data)
-		c.JSON(http.StatusOK, gin.H{
-			"name":  charName,
-			"level": 60,
-			"class": "Mage",
-			"guild": charName,
-		})
-	})
+	// 	// data := warcraftlogs.GetCharacter()
+	// 	// fmt.Println(data)
+	// 	c.JSON(http.StatusOK, gin.H{
+	// 		"name":  charName,
+	// 		"level": 60,
+	// 		"class": "Mage",
+	// 		"guild": charName,
+	// 	})
+	// })
 }

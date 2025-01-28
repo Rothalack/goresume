@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS regions (
     id INT AUTO_INCREMENT PRIMARY KEY,
     game_id INT NOT NULL,
-    region_id INT NOT NULL,
+    region_id INT NOT NULL UNIQUE,
     name VARCHAR(255) NOT NULL,
     compact_name VARCHAR(255) NOT NULL,
     slug VARCHAR(255) NOT NULL,
@@ -10,4 +10,3 @@ CREATE TABLE IF NOT EXISTS regions (
     UNIQUE KEY (game_id, region_id),
     FOREIGN KEY (game_id) REFERENCES games(id) ON DELETE CASCADE
 );
-

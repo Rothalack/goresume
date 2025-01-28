@@ -1,10 +1,10 @@
 CREATE TABLE IF NOT EXISTS difficulties (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    difficulty_id INT NOT NULL,
+    difficulty_id INT NOT NULL UNIQUE,
     zone_id INT NOT NULL,
     name VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     UNIQUE KEY (difficulty_id, zone_id),
-    FOREIGN KEY (zone_id) REFERENCES zones(id) ON DELETE CASCADE
+    FOREIGN KEY (zone_id) REFERENCES zones(zone_id) ON DELETE CASCADE
 );
