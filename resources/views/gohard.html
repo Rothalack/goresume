@@ -1,151 +1,210 @@
 {{define "head"}}
-    <style>
-        .video-container {
-            position: relative;
-            padding-top: 56.25%;
-            height: 0;
-            overflow: hidden;
-            max-width: 100%;
-        }
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        .logo-background {
-            background-image: url('./static/images/CozyLogoWebBackground.png');
-            /* background-size: cover; Makes sure the logo covers the entire page */
-            background-position: center;
-            background-attachment: fixed; /* Keeps the background fixed while scrolling */
-            background-repeat: no-repeat;
-            margin: 0;
-            padding: 0;
-            height: 100%; /* Ensures the body takes up full height */
-        }
-        .transparency-box {
-            opacity: 0.95;
-        }
-    </style>
-{{end}}
-
-{{define "content"}}
-    <div class="logo-background">
-        <div class="transparency-box">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 ml-32 mr-32">
-                <div class="col-span-2 p-4 bg-gray-800 shadow rounded">
-                    <h1 class="text-5xl font-bold mb-2">COZY</h1>
-                    <p>Competitive Classic WoW Guild</p>
-                </div>
-                <div class="p-4 bg-gray-800 shadow rounded">
-                    <h1 class="text-xl font-bold mb-2"><span class="text-yellow-500 mr-3"><i class="fa-solid fa-calendar-days"></i></span>Progression Race Rankings</h1>
-                    <ul class="space-y-2">
-                        <li class="flex items-center">
-                            <span class="text-yellow-500 mr-3"><i class="fas fa-star"></i></span>
-                            <span class="text-gray-200">World 8th/US 5th Molten Core</span>
-                        </li>
-                        <li class="flex items-center">
-                            <span class="text-yellow-500 mr-3"><i class="fas fa-star"></i></span>
-                            <span class="text-gray-200">World 8th/US 4th Onyxia</span>
-                        </li>
-                        <li class="flex items-center">
-                            <span class="text-yellow-500 mr-3"><i class="fas fa-star"></i></span>
-                            <span class="text-gray-200"><a href="https://www.twitch.tv/videos/551391874">World 22nd/US 7th Blackwing Lair</a></span>
-                        </li>
-                        <li class="flex items-center">
-                            <span class="text-yellow-500 mr-3"><i class="fas fa-star"></i></span>
-                            <span class="text-gray-200">World 3rd/US 3rd Zul'Gurub</span>
-                        </li>
-                        <li class="flex items-center">
-                            <span class="text-yellow-500 mr-3"><i class="fas fa-star"></i></span>
-                            <span class="text-gray-200">World 6th/US 2nd Karazhan</span>
-                        </li>
-                        <li class="flex items-center">
-                            <span class="text-yellow-500 mr-3"><i class="fas fa-star"></i></span>
-                            <span class="text-gray-200">World 15th/US 6th Magtheridon</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="p-4 bg-gray-800 shadow rounded">
-                    <h1 class="text-xl font-bold mb-2"><span class="text-red-400 mr-3"><i class="fa-solid fa-hourglass-start"></i></span>Notable Speed Runs</h1>
-                    <ul class="space-y-2">
-                        <li class="flex items-center">
-                            <span class="text-red-400 mr-3"><i class="fas fa-clock"></i></span>
-                            <span class="text-gray-200"><a href="https://www.twitch.tv/videos/539351941">32:00 Molten Core. World 41st/US 13th</a></span>
-                        </li>
-                        <li class="flex items-center">
-                            <span class="text-red-400 mr-3"><i class="fas fa-clock"></i></span>
-                            <span class="text-gray-200">23:16 Blackwing Lair. World 43rd/US 14th</span>
-                        </li>
-                        <li class="flex items-center">
-                            <span class="text-red-400 mr-3"><i class="fas fa-clock"></i></span>
-                            <span class="text-gray-200">37:12 Temple of Ahn'Qiraj. World 104th/US 24th</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="p-4 bg-gray-800 shadow rounded">
-                    <h1 class="text-xl font-bold mb-2">The back story</h1>
-                    <div class="video-container">
-                        <iframe src="https://www.youtube.com/embed/KXElLo56irw?si=Zvl7wHwj5GKiUGLC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                    </div>
-                </div>
-                <div class="p-4 bg-gray-800 shadow rounded">
-                    <h1 class="text-xl font-bold mb-2">The system from the perspective of a member</h1>
-                    <div class="video-container">
-                        <iframe src="https://www.youtube.com/embed/TmDRt_QwJfU?si=uisnGdVoXjaBhjLC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                    </div>
-                </div>
-                <div class="p-4 bg-gray-800 shadow rounded">
-                    <h1 class="text-xl font-bold mb-2">Victory Tour of Orgrimmar</h1>
-                    <div class="video-container">
-                        <iframe src="https://www.youtube.com/embed/yPQkiYxiXgo?si=Fwf61u57dfeQNlV4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                    </div>
-                </div>
-                <div class="p-4 bg-gray-800 shadow rounded">
-                    <h1 class="text-xl font-bold mb-2">A glimpse of world PvP operations</h1>
-                    <div class="video-container">
-                        <iframe src="https://www.youtube.com/embed/SGg3BSNC0ek?si=tw4381bNwKo4esH_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                    </div>
-                </div>
-                <div class="p-4 bg-gray-800 shadow rounded">
-                    <h1 class="text-xl font-bold mb-2">Operation Fragments Funnel</h1>
-                    <p class="mb-2">
-                        This project was a massive undertaking, a feat of coordination and strategy that pushed the limits of what was possible on Classic WoW servers. For weeks, we worked closely with several major guilds to establish a system for funneling Silithid Carapace Fragments, a key resource required to obtain the extremely exclusive and sought-after AQ mount, the Black Qiraji Battle Tank.
-                    </p>
-                    <p class="mb-2">
-                        To put it in perspective: each character needed 18,000 fragments to earn the mount. This wasn't a private event—it was an open-world competition, with the entire server vying for the same prize. We had to fully control the zone, constantly outmaneuvering anyone else who tried to gather fragments.
-                    </p>
-                    <p class="mb-2">
-                        Our efforts paid off. The system we built was so efficient that we were the first in the world to complete the farming process, enabling us to advance in the quest chain and secure the Scepter Shards, solidifying our place at the forefront of the race.
-                    </p>
-                </div>
-                <div class="p-4 bg-gray-800 shadow rounded">
-                    <h1 class="text-xl font-bold mb-2">A glimpse of Silithus Domination</h1>
-                    <div class="video-container">
-                        <iframe src="https://www.youtube.com/embed/xI36G8XkYO0?si=mcepxyALAF6vOeN3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                    </div>
-                </div>
-                <div class="p-4 bg-gray-800 shadow rounded">
-                    <h1 class="text-xl font-bold mb-2">World First Green Scepter Shard</h1>
-                    <div class="video-container">
-                        <iframe src="https://www.youtube.com/embed/PiXI9QXc9GY?si=JnyqYqW6bME4oC2N" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                    </div>
-                </div>
-                <div class="p-4 bg-gray-800 shadow rounded">
-                    <h1 class="text-xl font-bold mb-2">World First Blue Scepter Shard</h1>
-                    <div class="video-container">
-                        <iframe src="https://www.youtube.com/embed/CsYpiVwiJxg?si=tAdAKnItdQsfaI06" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-{{end}}
-
-{{define "pagejs"}}
-
-{{end}}
+<style>
+	.video-container {
+		position: relative;
+		padding-top: 56.25%;
+		height: 0;
+		overflow: hidden;
+		max-width: 100%;
+	}
+	.video-container iframe {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+	.logo-background {
+		background-image: url('./static/images/CozyLogoWebBackground.png');
+		background-position: center;
+		background-attachment: fixed;
+		background-repeat: no-repeat;
+		margin: 0;
+		padding: 0;
+		height: 100%;
+	}
+	.transparency-box {
+		opacity: 0.95;
+	}
+</style>
+{{end}} {{define "content"}}
+<div class="logo-background">
+	<div class="transparency-box">
+		<div class="grid grid-cols-1 md:grid-cols-2 gap-4 ml-32 mr-32">
+			<div class="col-span-2 p-4 bg-gray-800 shadow rounded">
+				<h1 class="text-5xl font-bold mb-2">COZY</h1>
+				<p>Competitive Classic WoW Guild</p>
+			</div>
+			<div class="p-4 bg-gray-800 shadow rounded">
+				<h1 class="text-xl font-bold mb-2">
+					<span class="text-yellow-500 mr-3"><i class="fa-solid fa-calendar-days"></i></span>
+					Progression Race Rankings
+				</h1>
+				<ul class="space-y-2">
+					<li class="flex items-center">
+						<span class="text-yellow-500 mr-3"><i class="fas fa-star"></i></span>
+						<span class="text-gray-200">World 8th/US 5th Molten Core</span>
+					</li>
+					<li class="flex items-center">
+						<span class="text-yellow-500 mr-3"><i class="fas fa-star"></i></span>
+						<span class="text-gray-200">World 8th/US 4th Onyxia</span>
+					</li>
+					<li class="flex items-center">
+						<span class="text-yellow-500 mr-3"><i class="fas fa-star"></i></span>
+						<span class="text-gray-200">
+							<a href="https://www.twitch.tv/videos/551391874">World 22nd/US 7th Blackwing Lair</a>
+						</span>
+					</li>
+					<li class="flex items-center">
+						<span class="text-yellow-500 mr-3"><i class="fas fa-star"></i></span>
+						<span class="text-gray-200">World 3rd/US 3rd Zul'Gurub</span>
+					</li>
+					<li class="flex items-center">
+						<span class="text-yellow-500 mr-3"><i class="fas fa-star"></i></span>
+						<span class="text-gray-200">World 6th/US 2nd Karazhan</span>
+					</li>
+					<li class="flex items-center">
+						<span class="text-yellow-500 mr-3"><i class="fas fa-star"></i></span>
+						<span class="text-gray-200">World 15th/US 6th Magtheridon</span>
+					</li>
+				</ul>
+			</div>
+			<div class="p-4 bg-gray-800 shadow rounded">
+				<h1 class="text-xl font-bold mb-2">
+					<span class="text-red-400 mr-3"><i class="fa-solid fa-hourglass-start"></i></span>
+					Notable Speed Runs
+				</h1>
+				<ul class="space-y-2">
+					<li class="flex items-center">
+						<span class="text-red-400 mr-3"><i class="fas fa-clock"></i></span>
+						<span class="text-gray-200">
+							<a href="https://www.twitch.tv/videos/539351941">32:00 Molten Core. World 41st/US 13th</a>
+						</span>
+					</li>
+					<li class="flex items-center">
+						<span class="text-red-400 mr-3"><i class="fas fa-clock"></i></span>
+						<span class="text-gray-200">23:16 Blackwing Lair. World 43rd/US 14th</span>
+					</li>
+					<li class="flex items-center">
+						<span class="text-red-400 mr-3"><i class="fas fa-clock"></i></span>
+						<span class="text-gray-200">37:12 Temple of Ahn'Qiraj. World 104th/US 24th</span>
+					</li>
+				</ul>
+			</div>
+			<div class="p-4 bg-gray-800 shadow rounded">
+				<h1 class="text-xl font-bold mb-2">The back story</h1>
+				<div class="video-container">
+					<iframe
+						src="https://www.youtube.com/embed/KXElLo56irw?si=Zvl7wHwj5GKiUGLC"
+						title="YouTube video player"
+						frameborder="0"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+						referrerpolicy="strict-origin-when-cross-origin"
+						allowfullscreen
+					></iframe>
+				</div>
+			</div>
+			<div class="p-4 bg-gray-800 shadow rounded">
+				<h1 class="text-xl font-bold mb-2">The system from the perspective of a member</h1>
+				<div class="video-container">
+					<iframe
+						src="https://www.youtube.com/embed/TmDRt_QwJfU?si=uisnGdVoXjaBhjLC"
+						title="YouTube video player"
+						frameborder="0"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+						referrerpolicy="strict-origin-when-cross-origin"
+						allowfullscreen
+					></iframe>
+				</div>
+			</div>
+			<div class="p-4 bg-gray-800 shadow rounded">
+				<h1 class="text-xl font-bold mb-2">Victory Tour of Orgrimmar</h1>
+				<div class="video-container">
+					<iframe
+						src="https://www.youtube.com/embed/yPQkiYxiXgo?si=Fwf61u57dfeQNlV4"
+						title="YouTube video player"
+						frameborder="0"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+						referrerpolicy="strict-origin-when-cross-origin"
+						allowfullscreen
+					></iframe>
+				</div>
+			</div>
+			<div class="p-4 bg-gray-800 shadow rounded">
+				<h1 class="text-xl font-bold mb-2">A glimpse of world PvP operations</h1>
+				<div class="video-container">
+					<iframe
+						src="https://www.youtube.com/embed/SGg3BSNC0ek?si=tw4381bNwKo4esH_"
+						title="YouTube video player"
+						frameborder="0"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+						referrerpolicy="strict-origin-when-cross-origin"
+						allowfullscreen
+					></iframe>
+				</div>
+			</div>
+			<div class="p-4 bg-gray-800 shadow rounded">
+				<h1 class="text-xl font-bold mb-2">Operation Fragments Funnel</h1>
+				<p class="mb-2">
+					This project was a massive undertaking, a feat of coordination and strategy that pushed the limits
+					of what was possible on Classic WoW servers. For weeks, we worked closely with several major guilds
+					to establish a system for funneling Silithid Carapace Fragments, a key resource required to obtain
+					the extremely exclusive and sought-after AQ mount, the Black Qiraji Battle Tank.
+				</p>
+				<p class="mb-2">
+					To put it in perspective: each character needed 18,000 fragments to earn the mount. This wasn't a
+					private event—it was an open-world competition, with the entire server vying for the same prize. We
+					had to fully control the zone, constantly outmaneuvering anyone else who tried to gather fragments.
+				</p>
+				<p class="mb-2">
+					Our efforts paid off. The system we built was so efficient that we were the first in the world to
+					complete the farming process, enabling us to advance in the quest chain and secure the Scepter
+					Shards, solidifying our place at the forefront of the race.
+				</p>
+			</div>
+			<div class="p-4 bg-gray-800 shadow rounded">
+				<h1 class="text-xl font-bold mb-2">A glimpse of Silithus Domination</h1>
+				<div class="video-container">
+					<iframe
+						src="https://www.youtube.com/embed/xI36G8XkYO0?si=mcepxyALAF6vOeN3"
+						title="YouTube video player"
+						frameborder="0"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+						referrerpolicy="strict-origin-when-cross-origin"
+						allowfullscreen
+					></iframe>
+				</div>
+			</div>
+			<div class="p-4 bg-gray-800 shadow rounded">
+				<h1 class="text-xl font-bold mb-2">World First Green Scepter Shard</h1>
+				<div class="video-container">
+					<iframe
+						src="https://www.youtube.com/embed/PiXI9QXc9GY?si=JnyqYqW6bME4oC2N"
+						title="YouTube video player"
+						frameborder="0"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+						referrerpolicy="strict-origin-when-cross-origin"
+						allowfullscreen
+					></iframe>
+				</div>
+			</div>
+			<div class="p-4 bg-gray-800 shadow rounded">
+				<h1 class="text-xl font-bold mb-2">World First Blue Scepter Shard</h1>
+				<div class="video-container">
+					<iframe
+						src="https://www.youtube.com/embed/CsYpiVwiJxg?si=tAdAKnItdQsfaI06"
+						title="YouTube video player"
+						frameborder="0"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+						referrerpolicy="strict-origin-when-cross-origin"
+						allowfullscreen
+					></iframe>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{{end}} {{define "pagejs"}} {{end}}
 <!-- https://www.icy-veins.com/forums/topic/51080-wow-classic-players-complete-blue-green-scepter-shards/ -->
 <!-- https://youtu.be/KXElLo56irw?si=1ZUPD4y7WfgAEJbG  history of ME -->
 <!-- https://www.youtube.com/watch?v=TmDRt_QwJfU description of the guild structure -->

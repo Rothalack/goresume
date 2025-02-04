@@ -25,43 +25,94 @@ type GuildResponse struct {
 }
 
 type Guild struct {
-	Id          int    `json:"id"`
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	Faction     struct {
-		Id   int    `json:"id"`
-		Name string `json:"name"`
-	} `json:"faction"`
-	Server struct {
-		Name   string `json:"name"`
-		Region struct {
-			Id          int    `json:"id"`
-			CompactName string `json:"compactName"`
-			Name        string `json:"name"`
-			Slug        string `json:"slug"`
-		} `json:"region"`
-		Slug string `json:"slug"`
-	} `json:"server"`
-	CompetitionMode bool `json:"competitionMode"`
-	StealthMode     bool `json:"stealthMode"`
+	Id   int    `json:"id"`
+	Name string `json:"name"`
+}
+
+type Rank struct {
+	Number     int    `json:"number"`
+	Percentile *int   `json:"percentile"`
+	Color      string `json:"color"`
+}
+
+type WorldRegionServerRankPositions struct {
+	WorldRank  Rank `json:"worldRank"`
+	RegionRank Rank `json:"regionRank"`
+	ServerRank Rank `json:"serverRank"`
 }
 
 type GuildZoneRankings struct {
-	Progress struct {
-		World  int `json:"world"`
-		Region int `json:"region"`
-		Server int `json:"server"`
-	} `json:"progress"`
-	Speed struct {
-		World  int `json:"world"`
-		Region int `json:"region"`
-		Server int `json:"server"`
-	} `json:"speed"`
-	CompleteRaidSpeed struct {
-		World  int `json:"world"`
-		Region int `json:"region"`
-		Server int `json:"server"`
-	} `json:"completeRaidSpeed"`
+	GuildData struct {
+		Guild struct {
+			ZoneRanking struct {
+				Progress          WorldRegionServerRankPositions `json:"progress"`
+				Speed             WorldRegionServerRankPositions `json:"speed"`
+				CompleteRaidSpeed WorldRegionServerRankPositions `json:"completeRaidSpeed"`
+			} `json:"zoneRanking"`
+		} `json:"guild"`
+	} `json:"guildData"`
+}
+
+type RankingRequest struct {
+	GuildName    string `form:"guild" binding:"required"`
+	ApiUrl       string `form:"api_url" binding:"required"`
+	ServerSlug   string `form:"server" binding:"required"`
+	RegionSlug   string `form:"region" binding:"required"`
+	ZoneId       int    `form:"zone" binding:"required"`
+	DifficultyId int    `form:"difficulty"`
+	Size         int    `form:"size"`
+}
+
+type CharRequest struct {
+	GuildId int `form:"guild" binding:"required"`
+	ZoneId  int `form:"zone" binding:"required"`
+}
+
+type GuildCharactersResponse struct {
+	CharacterData struct {
+		Characters struct {
+			Data     []Character `json:"data"`
+			LastPage int         `json:"last_page"`
+		} `json:"characters"`
+	} `json:"characterData"`
+}
+
+type GuildCharacters struct {
+	GuildId    int `json:"guildId"`
+	Difficulty int `json:"difficulty"`
+	Size       int `json:"size"`
+	ZoneId     int `json:"zoneId"`
+	Limit      int `json:"limit"`
+	Page       int `json:"page"`
+}
+
+type Character struct {
+	Id           int          `json:"id"`
+	Name         string       `json:"name"`
+	Faction      GameFaction  `json:"faction"`
+	ClassId      int          `json:"classId"`
+	Level        int          `json:"level"`
+	ZoneRankings CharRankings `json:"zoneRankings"`
+}
+
+type CharRankings struct {
+	Ranks        []Rank  `json:"ranks"`
+	BestAmount   float64 `json:"bestAmount"`
+	BestSpec     string  `json:"bestSpec"`
+	MedianAmount float64 `json:"medianAmount"`
+}
+
+type CharRank struct {
+	Rank       int     `json:"rank"`
+	OutOf      int     `json:"outOf"`
+	Amount     float64 `json:"amount"`
+	Spec       string  `json:"spec"`
+	Percentile float64 `json:"percentile"`
+}
+
+type GameFaction struct {
+	ID   int    `json:"id"`
+	Name string `json:"name"`
 }
 
 func SetGameContext(baseUrl string) {
@@ -105,13 +156,115 @@ func getAccessToken() (string, error) {
 	return tokenResponse.AccessToken, nil
 }
 
-func GetCharacter() string {
-	accessToken, err := getAccessToken()
+func GetRanking(guildData RankingRequest) (*GuildZoneRankings, int, error) {
+	guildName := guildData.GuildName
+	serverSlug := guildData.ServerSlug
+	regionSlug := guildData.RegionSlug
+	baseUrl := guildData.ApiUrl
+
+	SetGameContext(baseUrl)
+
+	guild, err := GetGuild(guildName, regionSlug, serverSlug)
+	guildId := guild.GuildData.Guild.Id
 	if err != nil {
-		log.Fatalf("Failed to get access token test: %v", err)
+		return nil, 0, fmt.Errorf("failed to find guild: %v", err)
+	}
+	if guildId < 1 {
+		return nil, 0, fmt.Errorf("failed to get guild")
 	}
 
-	return accessToken
+	zoneId := guildData.ZoneId
+	difficultyId := guildData.DifficultyId
+	size := guildData.Size
+
+	accessToken, err := getAccessToken()
+	if err != nil {
+		return nil, 0, fmt.Errorf("failed to get access token: %v", err)
+	}
+
+	client := graphql.NewClient(ApiUrl)
+
+	req := graphql.NewRequest(`
+	    query GuildZoneRanking($guildId: Int!, $zoneId: Int!, $size: Int, $difficulty: Int) {
+			guildData {
+				guild(id: $guildId) {
+					zoneRanking(zoneId: $zoneId) {
+						progress(size: $size) {
+							worldRank {
+								number
+								percentile
+								color
+							}
+							regionRank {
+								number
+								percentile
+								color
+							}
+							serverRank {
+								number
+								percentile
+								color
+							}
+						}
+						speed(size: $size, difficulty: $difficulty) {
+							worldRank {
+								number
+								percentile
+								color
+							}
+							regionRank {
+								number
+								percentile
+								color
+							}
+							serverRank {
+								number
+								percentile
+								color
+							}
+						}
+						completeRaidSpeed(size: $size, difficulty: $difficulty) {
+							worldRank {
+								number
+								percentile
+								color
+							}
+							regionRank {
+								number
+								percentile
+								color
+							}
+							serverRank {
+								number
+								percentile
+								color
+							}
+						}
+					}
+				}
+			}
+		}
+	`)
+
+	req.Var("guildId", guildId)
+	req.Var("zoneId", zoneId)
+	req.Var("size", size)
+	req.Var("difficulty", difficultyId)
+
+	req.Header.Set("Authorization", "Bearer "+accessToken)
+	req.Header.Set("Content-Type", "application/json")
+
+	var resp GuildZoneRankings
+	ctx := context.Background()
+	if err := client.Run(ctx, req, &resp); err != nil {
+		log.Printf("GraphQL Request Error: %v", err)
+		return nil, 0, fmt.Errorf("error querying guild: %w", err)
+	}
+
+	// prettyJSON, _ := json.MarshalIndent(resp, "", "  ")
+	// log.Printf("Full Raw Response: %s", string(prettyJSON))
+
+	return &resp, guildId, nil
 }
 
 func GetGuild(guildName, guildRegion, guildServer string) (*GuildResponse, error) {
@@ -128,23 +281,6 @@ func GetGuild(guildName, guildRegion, guildServer string) (*GuildResponse, error
                 guild(name: $name, serverSlug: $serverSlug, serverRegion: $serverRegion) {
                     id
                     name
-                    description
-                    faction {
-						id
-						name
-					}
-                    server {
-                        name
-                        region {
-							id
-							compactName
-							name
-							slug
-						}
-                        slug
-                    }
-                    competitionMode
-                    stealthMode
                 }
             }
         }
@@ -164,13 +300,13 @@ func GetGuild(guildName, guildRegion, guildServer string) (*GuildResponse, error
 		return nil, fmt.Errorf("error querying guild: %w", err)
 	}
 
-	prettyJSON, _ := json.MarshalIndent(resp, "", "  ")
-	log.Printf("Full Raw Response: %s", string(prettyJSON))
+	// prettyJSON, _ := json.MarshalIndent(resp, "", "  ")
+	// log.Printf("Full Raw Response: %s", string(prettyJSON))
 
 	return &resp, nil
 }
 
-func GetGuildZoneRanking(guildId, zoneId int) (*GuildZoneRankings, error) {
+func GetGuildZoneRanking(guildId, zoneId, size, difficultyId int) (*GuildZoneRankings, error) {
 	accessToken, err := getAccessToken()
 	if err != nil {
 		return nil, fmt.Errorf("failed to get access token: %v", err)
@@ -217,72 +353,71 @@ func GetGuildZoneRanking(guildId, zoneId int) (*GuildZoneRankings, error) {
 		return nil, fmt.Errorf("error querying guild: %w", err)
 	}
 
-	prettyJSON, _ := json.MarshalIndent(resp, "", "  ")
-	log.Printf("Full Raw Response: %s", string(prettyJSON))
-
 	return &resp, nil
 }
 
-// var resp map[string]interface{}
-// if err := client.Run(context.Background(), req, &resp); err != nil {
-// 	log.Printf("querying guild: %v", err)
-// }
+func GetChars(requestData CharRequest) ([]Character, error) {
+	guildId := requestData.GuildId
+	zoneId := requestData.ZoneId
 
-// prettyJSON, err := json.MarshalIndent(resp, "", "    ")
-// if err != nil {
-// 	log.Printf("Error pretty printing JSON: %v", err)
-// } else {
-// 	fmt.Printf("\n=== Query Response ===\n%s\n", string(prettyJSON))
-// }
+	accessToken, err := getAccessToken()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get access token: %v", err)
+	}
 
-// prettyJSON, _ := json.MarshalIndent(resp, "", "  ")
-// log.Printf("Full Raw Response: %s", string(prettyJSON))
+	client := graphql.NewClient(ApiUrl)
 
-// func GetGuild(guildName, guildServer string) (*Guild, error) {
-// 	query := fmt.Sprintf(guildQuery, guildName, guildServer)
+	compiledCharacters := []Character{}
+	page := 1
 
-// 	requestBody := map[string]interface{}{
-// 		"query": query,
-// 	}
-// 	body, err := json.Marshal(requestBody)
-// 	if err != nil {
-// 		return nil, err
-// 	}
+	for {
+		req := graphql.NewRequest(`
+			query GuildCharacters($guildId: Int!, $zoneId: Int!, $page: Int!) {
+				characterData {
+					characters(guildID: $guildId, limit: 100, page: $page) {
+						data {
+							id
+							name
+							classID
+							level
+							faction {
+								id
+								name
+							}
+							zoneRankings(
+								zoneID: $zoneId
+							)
+						}
+						last_page
+					}
+				}
+			}
+		`)
 
-// 	accessToken, err := getAccessToken()
-// 	if err != nil {
-// 		return nil, fmt.Errorf("failed to get access token: %w", err)
-// 	}
+		req.Var("guildId", guildId)
+		req.Var("zoneId", zoneId)
+		req.Var("page", page)
 
-// 	req, err := http.NewRequest("POST", apiURL, bytes.NewBuffer(body))
-// 	if err != nil {
-// 		return nil, err
-// 	}
+		req.Header.Set("Authorization", "Bearer "+accessToken)
+		req.Header.Set("Content-Type", "application/json")
 
-// 	req.Header.Set("Authorization", "Bearer "+accessToken)
-// 	req.Header.Set("Content-Type", "application/json")
+		var resp GuildCharactersResponse
+		ctx := context.Background()
+		if err := client.Run(ctx, req, &resp); err != nil {
+			log.Printf("GraphQL Request Error: %v", err)
+			return nil, fmt.Errorf("error querying guild: %w", err)
+		}
 
-// 	client := &http.Client{}
-// 	resp, err := client.Do(req)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	defer resp.Body.Close()
+		prettyJSON, _ := json.MarshalIndent(resp, "", "  ")
+		log.Printf("Full Raw Response: %s", string(prettyJSON))
 
-// 	if resp.StatusCode != http.StatusOK {
-// 		return nil, fmt.Errorf("unexpected status: %s", resp.Status)
-// 	}
+		compiledCharacters = append(compiledCharacters, resp.CharacterData.Characters.Data...)
+		fmt.Println(compiledCharacters)
+		if page >= resp.CharacterData.Characters.LastPage {
+			break
+		}
+		page++
+	}
 
-// 	rawBody, err := io.ReadAll(resp.Body)
-// 	if err != nil {
-// 		return nil, fmt.Errorf("failed to read response body: %w", err)
-// 	}
-// 	fmt.Println("Raw Response Body:", string(rawBody))
-
-// 	var gqlResponse GuildResponse
-// 	if err := json.NewDecoder(resp.Body).Decode(&gqlResponse); err != nil {
-// 		return nil, err
-// 	}
-
-// 	return &gqlResponse.Data.GuildData.Guild, nil
-// }
+	return compiledCharacters, nil
+}

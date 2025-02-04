@@ -114,6 +114,8 @@ func syncZones(expansionId int, zones []Zone) ([]Zone, error) {
 		syncPartitions(zone)
 		log.Printf("running syncDifficulties. zone.Id: %v", zone.Id)
 		syncDifficulties(zone)
+		log.Printf("running syncEncounters. zone.Id: %v", zone.Id)
+		syncEncounters(zone)
 	}
 
 	return zones, nil
@@ -150,13 +152,30 @@ func syncDifficulties(zone Zone) error {
 		for _, size := range difficulty.Sizes {
 			log.Printf("for size in difficulty.Sizes. size: %v", size)
 			_, err := config.DB.Exec(`
-				INSERT IGNORE INTO sizes (difficulty_id, size)
-				VALUES (?, ?)
-			`, difficulty.Id, size)
+				INSERT IGNORE INTO sizes (difficulty_id, zone_id, size)
+				VALUES (?, ?, ?)
+			`, difficulty.Id, zone.Id, size)
 			if err != nil {
 				log.Printf("failed to insert size %d: %v", zone.Id, err)
 				continue
 			}
+		}
+	}
+
+	return nil
+}
+
+func syncEncounters(zone Zone) error {
+	log.Printf("entered syncEncounters. Does the encounter exist. zone: %v", zone)
+	for _, encounter := range zone.Encounters {
+		log.Printf("for encounter in encounters. encounter: %v", encounter)
+		_, err := config.DB.Exec(`
+            INSERT IGNORE INTO encounters (encounter_id, encounter_name, zone_id)
+            VALUES (?, ?, ?)
+        `, encounter.Id, encounter.Name, zone.Id)
+		if err != nil {
+			log.Printf("failed to insert encounter %d: %v", zone.Id, err)
+			continue
 		}
 	}
 

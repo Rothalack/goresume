@@ -49,6 +49,78 @@ func Routes(router *gin.Engine) {
 		})
 	})
 
+	router.GET("/rankings", func(ctx *gin.Context) {
+		ctx.HTML(http.StatusOK, "rankings", gin.H{
+			"title": "Rankings",
+		})
+	})
+
+	router.GET("/api/logs-data", func(c *gin.Context) {
+		resp, err := warcraftlogs.GetData()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"data": resp,
+		})
+	})
+
+	router.GET("/api/ranking-data", func(c *gin.Context) {
+		var req warcraftlogs.RankingRequest
+
+		if err := c.ShouldBindQuery(&req); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
+
+		resp, guildId, err := warcraftlogs.GetRanking(req)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"data":    resp.GuildData.Guild.ZoneRanking,
+			"guildId": guildId,
+		})
+	})
+
+	router.GET("/api/char-data", func(c *gin.Context) {
+		var req warcraftlogs.CharRequest
+
+		if err := c.ShouldBindQuery(&req); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
+
+		resp, err := warcraftlogs.GetChars(req)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"data": resp,
+		})
+	})
+
+	// guildName := c.DefaultQuery("guildName", "")
+	// gameId := c.DefaultQuery("game", "")
+	// serverId := c.DefaultQuery("server", "")
+	// regionId := c.DefaultQuery("region", "")
+	// expansionId := c.DefaultQuery("expansion", "")
+	// zoneId := c.DefaultQuery("zone", "")
+	// difficultyId := c.DefaultQuery("difficulty", "")
+
 	// router.GET("/tools", func(ctx *gin.Context) {
 	// 	ctx.HTML(http.StatusOK, "tools", gin.H{
 	// 		"title": "Tools",
@@ -67,11 +139,11 @@ func Routes(router *gin.Engine) {
 	// 	})
 	// })
 
-	router.GET("/rankings", func(ctx *gin.Context) {
-		ctx.HTML(http.StatusOK, "rankings", gin.H{
-			"title": "Rankings",
-		})
-	})
+	// router.GET("/testvue", func(ctx *gin.Context) {
+	// 	ctx.HTML(http.StatusOK, "testvue", gin.H{
+	// 		"title": "testvue",
+	// 	})
+	// })
 
 	// router.GET("/api/find-regions", func(c *gin.Context) {
 	// 	resp, err := warcraftlogs.GetRegions()
@@ -85,19 +157,6 @@ func Routes(router *gin.Engine) {
 	// 		"data": resp.WorldData,
 	// 	})
 	// })
-
-	router.GET("/api/logs-data", func(c *gin.Context) {
-		resp, err := warcraftlogs.GetData()
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{
-				"error": err.Error(),
-			})
-			return
-		}
-		c.JSON(http.StatusOK, gin.H{
-			"data": resp,
-		})
-	})
 
 	// router.GET("/api/find-expansions", func(c *gin.Context) {
 	// 	resp, err := warcraftlogs.GetExpansions()

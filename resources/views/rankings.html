@@ -1,291 +1,251 @@
 {{define "head"}}
+<style>
+	.artifact {
+		color: #e5cc80 !important;
+	}
+	.astounding {
+		color: #e268a8 !important;
+	}
+	.legendary {
+		color: #ff8000 !important;
+	}
+	.epic {
+		color: #a335ee !important;
+	}
+	.rare {
+		color: #0070ff !important;
+	}
+	.uncommon {
+		color: #1eff00 !important;
+	}
+	.common {
+		color: #666 !important;
+	}
+	.transparent {
+		opacity: 0.9;
+	}
+	#guild_display {
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-blend-mode: darken;
+		background-color: rgba(0, 0, 0, 0.4);
+		overflow: hidden;
+	}
+</style>
+{{end}} {{define "content"}}
+<div class="ml-64 mr-64">
+	<guild-rankings></guild-rankings>
+	<!-- <div class="p-8 bg-gray-800 shadow rounded">
+		<character-rankings></character-rankings>
+	</div> -->
+</div>
+{{end}} {{define "pagejs"}}
+<script>
+	// let logsData = null;
 
-{{end}}
+	// document.addEventListener('DOMContentLoaded', function() {
+	//     fetchData();
+	//     //now the data that came back from fetchData needs to display the Regions drop down. Once the Region is selected, show the server.
+	//     // Once the server is selected, select the Game. Once the game is selected, select the Expansion. Once the expansion is slected, select the zone
+	//     // Once the zone is selected, show the difficulty drop down (ONLY IF THERE IS A DIFFICULTY FIELD FOR THE SELECTED ZONE). Select size, same constraint as difficulty
+	// });
 
-{{define "content"}}
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 ml-32 mr-32">
-        <div class="col-span-2 p-8 bg-gray-800 shadow rounded">
-            <div class="max-w-sm mx-auto mt-5">
-                <div class="mb-5">
-                    <label for="guild-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Guild Name</label>
-                    <input type="text" id="guild-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter guild name" required />
-                </div>
+	// function fetchData() {
+	//     fetch(`/api/logs-data`)
+	//         .then(response => response.json())
+	//         .then(resp => {
+	//             // console.log(resp.data);
+	//             logsData = resp.data;
+	//             populateGames(logsData);
+	//         })
+	//         .catch(err => console.error('Error fetching logs data: ', err))
+	// }
 
-                <div class="mb-5" id="game-input">
-                    <label for="game" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Game</label>
-                    <select id="game" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option value="">Select Game</option>
-                    </select>
-                </div>
+	// function populateGames(data) {
+	//     const gameSelect = document.getElementById('game');
 
-                <div class="mb-5" id="region-input" style="display:none;">
-                    <label for="region" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Region</label>
-                    <select id="region" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
-                        <option value="">Select Region</option>
-                    </select>
-                </div>
+	//     data.forEach(game => {
+	//         const option = document.createElement('option');
+	//         option.value = game.id;
+	//         option.textContent = game.game_name;
+	//         gameSelect.appendChild(option);
+	//     });
 
-                <div class="mb-5" id="server-input" style="display:none;">
-                    <label for="server" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Server</label>
-                    <select id="server" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
-                        <option value="">Select Server</option>
-                    </select>
-                </div>
+	//     gameSelect.addEventListener('blur', async (event) => {
+	//         const selectedGameId = this.value;
+	//         populateRegions(selectedGameId, data);
+	//     });
+	// }
 
-                <div class="mb-5" id="expansion-input" style="display:none;">
-                    <label for="expansion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Expansion</label>
-                    <select id="expansion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
-                        <option value="">Select Expansion</option>
-                    </select>
-                </div>
+	// function populateRegions(gameId, data) {
+	//     const regionSelect = document.getElementById('region');
+	//     regionSelect.innerHTML = "";
+	//     const resetOption = document.createElement('option');
+	//     resetOption.value = "";
+	//     resetOption.textContent = "Select Region";
 
-                <div class="mb-5" id="zone-input" style="display:none;">
-                    <label for="zone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Zone</label>
-                    <select id="zone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
-                        <option value="">Select Zone</option>
-                    </select>
-                </div>
+	//     data.forEach(game => {
+	//         if (game.id == gameId) {
+	//             game.regions.forEach(region => {
+	//                 console.log(region);
+	//                 const option = document.createElement('option');
+	//                 option.value = region.region_id;
+	//                 option.textContent = region.compact_name;
+	//                 regionSelect.appendChild(option);
+	//                 const regionInput = document.getElementById('region-input');
+	//                 regionInput.style.display = "block";
+	//             });
+	//         }
+	//         // game.regions.forEach(region => {
+	//         //     console.log(region.region_id)
+	//         //     const option = document.createElement('option');
+	//         //     option.value = region.region_id;
+	//         //     option.textContent = region.region_name;
+	//         //     regionSelect.appendChild(option);
+	//         // });
+	//     });
 
-                <div class="mb-5" id="difficulty-input" style="display:none;">
-                    <label for="difficulty" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Difficulty</label>
-                    <select id="difficulty" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
-                        <option value="">Select Difficulty</option>
-                    </select>
-                </div>
+	//     regionSelect.addEventListener('blur', async (event) => {
+	//         const selectedRegionId = this.value;
+	//         populateServers(selectedRegionId, data);
+	//     });
+	// }
 
-                <div class="mb-5" id="size-input" style="display:none;">
-                    <label for="size" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Size</label>
-                    <select id="size" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
-                        <option value="">Select Size</option>
-                    </select>
-                </div>
+	// function populateServers(regionId, data) {
+	//     const serverSelect = document.getElementById('serverDropdown');
+	//     serverSelect.innerHTML = "";
 
-                <button id="search-rankings" class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" disabled>
-                    Search Rankings
-                </button>
-            </div>
-        </div>
-        <div class="col-span-2 p-8 bg-gray-800 shadow rounded">
-            <h2 class="text-2xl mt-2 mb-5">Characters</h2>
-            <div id="characters" class="space-y-4"></div>
-            <div class="max-w-sm mx-auto mt-5">
-                <div class="mb-5">
-                    <label for="character-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Character Name</label>
-                    <input type="text" id="character-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Frothy" value="" required />
-                </div>
-                <button id="add-character" class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-blue-800">Find Character</button>
-            </div>
-        </div>
-    </div>
-{{end}}
+	//     data.forEach(game => {
+	//         game.regions.forEach(region => {
+	//             if (region.region_id == regionId) {
+	//                 region.servers.forEach(server => {
+	//                     const option = document.createElement('option');
+	//                     option.value = server.server_id;
+	//                     option.textContent = server.server_name;
+	//                     serverSelect.appendChild(option);
+	//                 });
+	//             }
+	//         });
+	//     });
+	// }
 
-{{define "pagejs"}}
-    <script>
-        let logsData = null;
+	// fetchRegions();
+	// function fetchRegions() {
+	//     fetch(`/api/find-regions`)
+	//         .then(response => response.json())
+	//         .then(resp => {
+	//             const regions = resp.data.regions;
+	//             renderRegionsDropdown(regions);
+	//         })
+	//         .catch(err => console.error('Error fetching regions: ', err))
+	// }
+	// function renderRegionsDropdown(regions){
+	//     const dropdown = document.getElementById('guildRegion');
+	//     regions.forEach((region) => {
+	//         const option = document.createElement('option');
+	//         option.value = region.slug
+	//         option.setAttribute('data-region-id', region.id)
+	//         option.textContent = region.slug
+	//         dropdown.appendChild(option);
+	//     });
+	// }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            fetchData();
-            //now the data that came back from fetchData needs to display the Regions drop down. Once the Region is selected, show the server.
-            // Once the server is selected, select the Game. Once the game is selected, select the Expansion. Once the expansion is slected, select the zone
-            // Once the zone is selected, show the difficulty drop down (ONLY IF THERE IS A DIFFICULTY FIELD FOR THE SELECTED ZONE). Select size, same constraint as difficulty
-        });
+	// function fetchServers(){
+	//     const dropdown = document.getElementById('guildRegion');
+	//     const selectedOption = dropdown.options[dropdown.selectedIndex];
 
-        function fetchData() {
-            fetch(`/api/logs-data`)
-                .then(response => response.json())
-                .then(resp => {
-                    // console.log(resp.data);
-                    logsData = resp.data;
-                    populateGames(logsData);
-                })
-                .catch(err => console.error('Error fetching logs data: ', err))
-        }
+	//     const regionId = selectedOption.getAttribute('data-region-id');
+	//     const regionSlug = selectedOption.value;
 
-        function populateGames(data) {
-            const gameSelect = document.getElementById('game');
+	//     fetch(`/api/find-server?regionId=${regionId}`)
+	//         .then(response => response.json())
+	//         .then(data => {
+	//             const servers = data.data;
+	//             renderServersDropdown(servers, regionSlug);
+	//         })
+	//         .catch(err => console.error('Error fetching servers: ', err));
+	// }
+	// function renderServersDropdown(servers, regionSlug) {
+	//     const dropdown = document.getElementById('guildServer');
 
-            data.forEach(game => {
-                const option = document.createElement('option');
-                option.value = game.id;
-                option.textContent = game.game_name;
-                gameSelect.appendChild(option);
-            });
+	//     dropdown.innerHTML = '<option value="">Select Server</option>';
 
-            gameSelect.addEventListener('blur', async (event) => {
-                const selectedGameId = this.value;
-                populateRegions(selectedGameId, data);
-            });
-        }
+	//     servers.forEach((server) => {
+	//         const option = document.createElement('option');
+	//         option.value = server.slug;
+	//         option.textContent = server.name;
+	//         dropdown.appendChild(option);
+	//     });
+	// }
+	// Find guild
+	// document.getElementById('find-guild').addEventListener('click', function () {
+	//     const guildName = document.getElementById('guild').value;
+	//     const guildRegion = document.getElementById('guildRegion').value;
+	//     const guildServer = document.getElementById('guildServer').value;
 
-        function populateRegions(gameId, data) {
-            const regionSelect = document.getElementById('region');
-            regionSelect.innerHTML = "";
-            const resetOption = document.createElement('option');
-            resetOption.value = "";
-            resetOption.textContent = "Select Region";
+	//     fetch(`/api/find-guild?guild=${guildName}&guildServer=${guildServer}&guildRegion=${guildRegion}`)
+	//         .then(response => response.json())
+	//         .then(data => {
+	//             const guildInfo = document.getElementById('guild-info');
+	//             guildInfo.classList.remove('hidden');
+	//             guildInfo.className = 'p-4 bg-gray-900 rounded shadow text-white';
+	//             guildInfo.innerHTML = `
+	//                 <h3 class="text-2xl font-bold">${data.guildName}</h3>
+	//                 <p>Region: ${data.region}</p>
+	//                 <p>Realm: ${data.realm}</p>
+	//             `;
+	//         })
+	//         .catch(err => console.error('Error fetching guild:', err));
 
-            data.forEach(game => {
-                if (game.id == gameId) {
-                    game.regions.forEach(region => {
-                        console.log(region);
-                        const option = document.createElement('option');
-                        option.value = region.region_id;
-                        option.textContent = region.compact_name;
-                        regionSelect.appendChild(option);
-                        const regionInput = document.getElementById('region-input');
-                        regionInput.style.display = "block";
-                    });
-                }
-                // game.regions.forEach(region => {
-                //     console.log(region.region_id)
-                //     const option = document.createElement('option');
-                //     option.value = region.region_id;
-                //     option.textContent = region.region_name;
-                //     regionSelect.appendChild(option);
-                // });
-            });
+	//     const guildForm = document.getElementById('guild-form');
+	//     guildForm.style.display = 'none';
+	// });
 
-            regionSelect.addEventListener('blur', async (event) => {
-                const selectedRegionId = this.value;
-                populateServers(selectedRegionId, data);
-            });
-        }
+	// document.getElementById('add-character').addEventListener('click', async (event) => {
+	//     event.preventDefault();
 
-        function populateServers(regionId, data) {
-            const serverSelect = document.getElementById('serverDropdown');
-            serverSelect.innerHTML = "";
+	//     const input = document.getElementById('character-name');
+	//     const characterName = input.value.trim();
 
-            data.forEach(game => {
-                game.regions.forEach(region => {
-                    if (region.region_id == regionId) {
-                        region.servers.forEach(server => {
-                            const option = document.createElement('option');
-                            option.value = server.server_id;
-                            option.textContent = server.server_name;
-                            serverSelect.appendChild(option);
-                        });
-                    }
-                });
-            });
-        }
+	//     if (!characterName) {
+	//         alert('Please enter a character name.');
+	//         return;
+	//     }
 
-        // fetchRegions();
-        // function fetchRegions() {
-        //     fetch(`/api/find-regions`)
-        //         .then(response => response.json())
-        //         .then(resp => {
-        //             const regions = resp.data.regions;
-        //             renderRegionsDropdown(regions);
-        //         })
-        //         .catch(err => console.error('Error fetching regions: ', err))
-        // }
-        // function renderRegionsDropdown(regions){
-        //     const dropdown = document.getElementById('guildRegion');
-        //     regions.forEach((region) => {
-        //         const option = document.createElement('option');
-        //         option.value = region.slug
-        //         option.setAttribute('data-region-id', region.id)
-        //         option.textContent = region.slug
-        //         dropdown.appendChild(option);
-        //     });
-        // }
+	//     try {
+	//         // Simulate fetching character data from an API
+	//         const response = await fetch('/api/add-character', {
+	//             method: 'POST',
+	//             headers: {
+	//                 'Content-Type': 'application/x-www-form-urlencoded',
+	//             },
+	//             body: `character=${characterName}`,
+	//         })
+	//         if (!response.ok) {
+	//             throw new Error(`Failed to fetch character data for ${characterName}`);
+	//         }
 
-        // function fetchServers(){
-        //     const dropdown = document.getElementById('guildRegion');
-        //     const selectedOption = dropdown.options[dropdown.selectedIndex];
+	//         const data = await response.json();
 
-        //     const regionId = selectedOption.getAttribute('data-region-id');
-        //     const regionSlug = selectedOption.value;
+	//         // Create a new div for the character display
+	//         const characterDiv = document.createElement('div');
+	//         characterDiv.className = 'p-4 bg-gray-900 rounded shadow text-white';
+	//         characterDiv.innerHTML = `
+	//             <h3 class="text-2xl font-bold">${data.name}</h3>
+	//             <p>Level: ${data.level}</p>
+	//             <p>Class: ${data.class}</p>
+	//             <p>Guild: ${data.guild}</p>
+	//         `;
 
-        //     fetch(`/api/find-server?regionId=${regionId}`)
-        //         .then(response => response.json())
-        //         .then(data => {
-        //             const servers = data.data;
-        //             renderServersDropdown(servers, regionSlug);
-        //         })
-        //         .catch(err => console.error('Error fetching servers: ', err));
-        // }
-        // function renderServersDropdown(servers, regionSlug) {
-        //     const dropdown = document.getElementById('guildServer');
+	//         // Append the new character div
+	//         document.getElementById('characters').appendChild(characterDiv);
 
-        //     dropdown.innerHTML = '<option value="">Select Server</option>';
-
-        //     servers.forEach((server) => {
-        //         const option = document.createElement('option');
-        //         option.value = server.slug;
-        //         option.textContent = server.name;
-        //         dropdown.appendChild(option);
-        //     });
-        // }
-        // Find guild
-        // document.getElementById('find-guild').addEventListener('click', function () {
-        //     const guildName = document.getElementById('guild').value;
-        //     const guildRegion = document.getElementById('guildRegion').value;
-        //     const guildServer = document.getElementById('guildServer').value;
-
-        //     fetch(`/api/find-guild?guild=${guildName}&guildServer=${guildServer}&guildRegion=${guildRegion}`)
-        //         .then(response => response.json())
-        //         .then(data => {
-        //             const guildInfo = document.getElementById('guild-info');
-        //             guildInfo.classList.remove('hidden');
-        //             guildInfo.className = 'p-4 bg-gray-900 rounded shadow text-white';
-        //             guildInfo.innerHTML = `
-        //                 <h3 class="text-2xl font-bold">${data.guildName}</h3>
-        //                 <p>Region: ${data.region}</p>
-        //                 <p>Realm: ${data.realm}</p>
-        //             `;
-        //         })
-        //         .catch(err => console.error('Error fetching guild:', err));
-
-        //     const guildForm = document.getElementById('guild-form');
-        //     guildForm.style.display = 'none';
-        // });
-
-        // document.getElementById('add-character').addEventListener('click', async (event) => {
-        //     event.preventDefault();
-
-        //     const input = document.getElementById('character-name');
-        //     const characterName = input.value.trim();
-
-        //     if (!characterName) {
-        //         alert('Please enter a character name.');
-        //         return;
-        //     }
-
-        //     try {
-        //         // Simulate fetching character data from an API
-        //         const response = await fetch('/api/add-character', {
-        //             method: 'POST',
-        //             headers: {
-        //                 'Content-Type': 'application/x-www-form-urlencoded',
-        //             },
-        //             body: `character=${characterName}`,
-        //         })
-        //         if (!response.ok) {
-        //             throw new Error(`Failed to fetch character data for ${characterName}`);
-        //         }
-
-        //         const data = await response.json();
-
-        //         // Create a new div for the character display
-        //         const characterDiv = document.createElement('div');
-        //         characterDiv.className = 'p-4 bg-gray-900 rounded shadow text-white';
-        //         characterDiv.innerHTML = `
-        //             <h3 class="text-2xl font-bold">${data.name}</h3>
-        //             <p>Level: ${data.level}</p>
-        //             <p>Class: ${data.class}</p>
-        //             <p>Guild: ${data.guild}</p>
-        //         `;
-
-        //         // Append the new character div
-        //         document.getElementById('characters').appendChild(characterDiv);
-
-        //         // Clear the input field
-        //         input.value = '';
-        //     } catch (error) {
-        //         console.error(error);
-        //         alert('Error fetching character data. Please try again.');
-        //     }
-        // });
-    </script>
+	//         // Clear the input field
+	//         input.value = '';
+	//     } catch (error) {
+	//         console.error(error);
+	//         alert('Error fetching character data. Please try again.');
+	//     }
+	// });
+</script>
 {{end}}

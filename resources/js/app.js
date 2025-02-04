@@ -1,9 +1,12 @@
-import Vue from 'vue';
-import ExampleTest from './components/ExampleTest.vue';
+import { autoRegisterComponents } from '/resources/js/utils/registerComponents.js';
+import ExampleTest from '/resources/js/components/ExampleTest.vue';
+import GuildRankings from '/resources/js/components/GuildRankings.vue';
+import CharacterRankings from '/resources/js/components/CharacterRankings.vue';
+import VueSelect from 'vue3-select-component';
 
-Vue.component('exampleTest', require('./components/ExampleTest.vue').default);
-
-// Initialize Vue instance
-new Vue({
-  el: '#app', // The element in your HTML to mount Vue
+autoRegisterComponents({
+  'example-test': ExampleTest,
+  'guild-rankings': GuildRankings,
+  'character-rankings': CharacterRankings,
+  'vue-select': VueSelect,
 });

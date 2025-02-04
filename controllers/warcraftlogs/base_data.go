@@ -66,8 +66,15 @@ type ExpansionsResponse struct {
 type Zone struct {
 	Id           int          `json:"id"`
 	Name         string       `json:"name"`
+	Encounters   []Encounter  `json:"encounters"`
 	Partitions   []Partition  `json:"paritions"`
 	Difficulties []Difficulty `json:"difficulties"`
+}
+
+type Difficulty struct {
+	Id    int    `json:"id"`
+	Name  string `json:"name"`
+	Sizes []int  `json:"sizes"`
 }
 
 type Partition struct {
@@ -77,10 +84,9 @@ type Partition struct {
 	DefaultStatus bool   `json:"default"`
 }
 
-type Difficulty struct {
-	Id    int    `json:"id"`
-	Name  string `json:"name"`
-	Sizes []int  `json:"sizes"`
+type Encounter struct {
+	Id   int    `json:"Id"`
+	Name string `json:"name"`
 }
 
 func GetData() ([]map[string]interface{}, error) {
@@ -128,22 +134,43 @@ func GetData() ([]map[string]interface{}, error) {
 										'difficulty', (
 											SELECT JSON_ARRAYAGG(
 												JSON_OBJECT(
-													'difficult_id', d.difficulty_id,
+													'difficulty_id', d.difficulty_id,
 													'difficulty_name', d.name,
 													'sizes', (
-														SELECT JSON_ARRAYAGG(
-															JSON_OBJECT(
-																'size_id', sizes.id,
-																'size', sizes.size
-															)
+														SELECT IF(
+															EXISTS(
+																SELECT 1
+																FROM sizes
+																WHERE sizes.difficulty_id = d.difficulty_id
+																AND sizes.zone_id = z.zone_id
+															),
+															(
+																SELECT JSON_ARRAYAGG(
+																	JSON_OBJECT(
+																		'size', sizes.size
+																	)
+																)
+																FROM sizes
+																WHERE sizes.difficulty_id = d.difficulty_id
+																AND sizes.zone_id = z.zone_id
+															),
+															JSON_ARRAY(JSON_OBJECT('size', NULL))
 														)
-														FROM sizes sizes
-														WHERE d.difficulty_id = sizes.difficulty_id
 													)
 												)
 											)
 											FROM difficulties d
 											WHERE z.zone_id = d.zone_id
+										),
+										'encounters', (
+											SELECT JSON_ARRAYAGG(
+												JSON_OBJECT(
+													'encounter_id', e.encounter_id,
+													'encounter_name', e.encounter_name
+												)
+											)
+											FROM encounters e
+											WHERE z.zone_id = e.zone_id
 										)
 									)
 								)
@@ -202,11 +229,9 @@ func GetExpansions() ([]Expansion, error) {
 							sizes
 						}
 						name
-						partitions {
+						encounters {
 							id
 							name
-							compactName
-							default
 						}
 					}
 				}
@@ -225,38 +250,6 @@ func GetExpansions() ([]Expansion, error) {
 	}
 
 	return resp.WorldData.Expansions, nil
-}
-
-func GetZoneIds() (*RegionsResponse, error) {
-	accessToken, err := getAccessToken()
-	if err != nil {
-		return nil, fmt.Errorf("failed to get access token: %v", err)
-	}
-
-	client := graphql.NewClient(ApiUrl)
-
-	req := graphql.NewRequest(`
-		query {
-			worldData {
-				zones {
-					id
-					slug
-				}
-			}
-		}
-	`)
-
-	req.Header.Set("Authorization", "Bearer "+accessToken)
-	req.Header.Set("Content-Type", "application/json")
-
-	var resp RegionsResponse
-	ctx := context.Background()
-	if err := client.Run(ctx, req, &resp); err != nil {
-		log.Printf("GraphQL Request GetZoneIds Error: %v", err)
-		return nil, fmt.Errorf("error querying zones: %w", err)
-	}
-
-	return &resp, nil
 }
 
 func GetRegions() ([]Region, error) {
@@ -322,7 +315,8 @@ func GetServersFromRegion(regionId int) ([]Server, error) {
 								region {
 									slug
 								}
-							}
+							},
+							last_page
 						}
 					}
 				}

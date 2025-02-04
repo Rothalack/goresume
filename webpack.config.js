@@ -9,7 +9,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      vue: 'vue/dist/vue.esm.js',
+      vue: 'vue/dist/vue.esm-browser.js',
     },
     extensions: ['.js', '.vue', '.json'],
   },
@@ -17,7 +17,7 @@ module.exports = {
     rules: [
       {
         test: /\.vue$/,
-        loader: 'vue-loader',
+        use: 'vue-loader',
       },
     ],
   },

@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS difficulties (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    difficulty_id INT NOT NULL UNIQUE,
+    difficulty_id INT NOT NULL,
     zone_id INT NOT NULL,
     name VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
