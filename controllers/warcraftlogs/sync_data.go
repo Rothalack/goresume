@@ -29,6 +29,7 @@ func SyncData() {
 		syncExpansions(game.Id)
 		log.Printf("running syncRegions. gameId: %v", game.Id)
 		syncRegions(game.Id)
+		log.Println("running syncClassesFactions")
 	}
 }
 
@@ -110,32 +111,11 @@ func syncZones(expansionId int, zones []Zone) ([]Zone, error) {
 			continue
 		}
 
-		log.Printf("running syncPartitions. zone.Id: %v", zone.Id)
-		syncPartitions(zone)
 		log.Printf("running syncDifficulties. zone.Id: %v", zone.Id)
 		syncDifficulties(zone)
-		log.Printf("running syncEncounters. zone.Id: %v", zone.Id)
-		syncEncounters(zone)
 	}
 
 	return zones, nil
-}
-
-func syncPartitions(zone Zone) error {
-	log.Printf("entered syncPartitions. Does the partition exist. zone: %v", zone)
-	for _, partition := range zone.Partitions {
-		log.Printf("for partition in partitions. partition: %v", partition)
-		_, err := config.DB.Exec(`
-            INSERT IGNORE INTO partitions (partition_id, zone_id, name, compact_name, default_status)
-            VALUES (?, ?, ?, ?, ?)
-        `, partition.Id, zone.Id, partition.Name, partition.CompactName, partition.DefaultStatus)
-		if err != nil {
-			log.Printf("failed to insert partition %d: %v", zone.Id, err)
-			continue
-		}
-	}
-
-	return nil
 }
 
 func syncDifficulties(zone Zone) error {
@@ -159,23 +139,6 @@ func syncDifficulties(zone Zone) error {
 				log.Printf("failed to insert size %d: %v", zone.Id, err)
 				continue
 			}
-		}
-	}
-
-	return nil
-}
-
-func syncEncounters(zone Zone) error {
-	log.Printf("entered syncEncounters. Does the encounter exist. zone: %v", zone)
-	for _, encounter := range zone.Encounters {
-		log.Printf("for encounter in encounters. encounter: %v", encounter)
-		_, err := config.DB.Exec(`
-            INSERT IGNORE INTO encounters (encounter_id, encounter_name, zone_id)
-            VALUES (?, ?, ?)
-        `, encounter.Id, encounter.Name, zone.Id)
-		if err != nil {
-			log.Printf("failed to insert encounter %d: %v", zone.Id, err)
-			continue
 		}
 	}
 

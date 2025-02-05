@@ -66,8 +66,6 @@ type ExpansionsResponse struct {
 type Zone struct {
 	Id           int          `json:"id"`
 	Name         string       `json:"name"`
-	Encounters   []Encounter  `json:"encounters"`
-	Partitions   []Partition  `json:"paritions"`
 	Difficulties []Difficulty `json:"difficulties"`
 }
 
@@ -75,18 +73,6 @@ type Difficulty struct {
 	Id    int    `json:"id"`
 	Name  string `json:"name"`
 	Sizes []int  `json:"sizes"`
-}
-
-type Partition struct {
-	Id            int    `json:"id"`
-	Name          string `json:"name"`
-	CompactName   string `json:"compactName"`
-	DefaultStatus bool   `json:"default"`
-}
-
-type Encounter struct {
-	Id   int    `json:"Id"`
-	Name string `json:"name"`
 }
 
 func GetData() ([]map[string]interface{}, error) {
@@ -97,6 +83,24 @@ func GetData() ([]map[string]interface{}, error) {
 				'game_name', g.game_name,
 				'api_url', g.api_url,
 				'note', g.note,
+				'classes', (
+					SELECT JSON_ARRAYAGG(
+						JSON_OBJECT(
+							'class_id', c.class_id,
+							'class_name', c.class_name
+						)
+					)
+					FROM classes c
+				),
+				'factions', (
+					SELECT JSON_ARRAYAGG(
+						JSON_OBJECT(
+							'faction_id', c.faction_id,
+							'faction_name', c.faction_name
+						)
+					)
+					FROM factions c
+				),
 				'regions', (
 					SELECT JSON_ARRAYAGG(
 						JSON_OBJECT(
@@ -161,16 +165,6 @@ func GetData() ([]map[string]interface{}, error) {
 											)
 											FROM difficulties d
 											WHERE z.zone_id = d.zone_id
-										),
-										'encounters', (
-											SELECT JSON_ARRAYAGG(
-												JSON_OBJECT(
-													'encounter_id', e.encounter_id,
-													'encounter_name', e.encounter_name
-												)
-											)
-											FROM encounters e
-											WHERE z.zone_id = e.zone_id
 										)
 									)
 								)
@@ -229,10 +223,6 @@ func GetExpansions() ([]Expansion, error) {
 							sizes
 						}
 						name
-						encounters {
-							id
-							name
-						}
 					}
 				}
 			}

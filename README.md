@@ -1,8 +1,12 @@
+**Single Point Rendering**
+npm run dev
+
+this runs the following
+air
+npx tailwindcss -i ./static/css/styles.css -o ./static/css/output.css --watch
+npx webpack --mode development --watch --no-cache
+
 **smol todos**
-Get encounters ingested in sync_data.
-Need encounter_id to get character rankings for the raid. I can have each set of encounters per raid they chose, so I have the id's to get these
-https://www.warcraftlogs.com/v2-api-docs/warcraft/query.doc.html
-Need paritions too?
 
 **BIG TODOs**
 **logging/error logging**
@@ -18,14 +22,4 @@ Docker required to go full release hooked up with github actions, with migration
 go app
 mysql
 redis? not currently needed
-
-**Componentize Frontend**
-npm install vue@latest webpack webpack-cli webpack-dev-server vue-loader@next --save-dev
-
-**Single Point Rendering**
-npm run dev
-
-this runs the following
-air
-npx tailwindcss -i ./static/css/styles.css -o ./static/css/output.css --watch
-npx webpack --mode development --watch --no-cache
+redis for storing access_token i think

@@ -1,9 +1,12 @@
-CREATE TABLE IF NOT EXISTS encounters (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    encounter_id INT NOT NULL,
-    encounter_name VARCHAR(255) NOT NULL,
-    zone_id INT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (zone_id) REFERENCES zones(zone_id) ON DELETE CASCADE
-);
+-- CREATE TABLE IF NOT EXISTS encounters (
+--     id INT AUTO_INCREMENT PRIMARY KEY,
+--     encounter_id INT NOT NULL,
+--     encounter_name VARCHAR(255) NOT NULL,
+--     zone_id INT NOT NULL,
+--     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+-- 	UNIQUE KEY (encounter_id, zone_id),
+--     FOREIGN KEY (zone_id) REFERENCES zones(zone_id) ON DELETE CASCADE
+-- );
+
+-- NO LONGER USED
