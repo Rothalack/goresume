@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS servers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    region_id INT NOT NULL,
+    server_id INT NOT NULL UNIQUE,
+    server_name VARCHAR(255) NOT NULL,
+    normalized_name VARCHAR(255) NOT NULL,
+    slug VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY (region_id, server_id),
+    FOREIGN KEY (region_id) REFERENCES regions(region_id) ON DELETE CASCADE
+);

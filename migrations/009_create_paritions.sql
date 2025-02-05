@@ -1,0 +1,14 @@
+-- CREATE TABLE IF NOT EXISTS partitions (
+--     id INT AUTO_INCREMENT PRIMARY KEY,
+--     partition_id INT NOT NULL UNIQUE,
+--     zone_id INT NOT NULL,
+--     name VARCHAR(255) NOT NULL,
+--     compact_name VARCHAR(255) NOT NULL,
+--     default_status BOOLEAN NOT NULL DEFAULT false,
+--     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+--     UNIQUE KEY (partition_id, zone_id),
+--     FOREIGN KEY (zone_id) REFERENCES zones(zone_id) ON DELETE CASCADE
+-- );
+
+-- NO LONGER USED

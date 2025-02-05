@@ -1,14 +1,27 @@
 package routes
 
 import (
+	"goresume/controllers/warcraftlogs"
+	"html/template"
 	"net/http"
 
+	"github.com/foolin/goview"
 	"github.com/foolin/goview/supports/ginview"
 	"github.com/gin-gonic/gin"
 )
 
 func Routes(router *gin.Engine) {
-	router.HTMLRender = ginview.Default()
+	var CustomConfig = goview.Config{
+		Root:         "resources/views",
+		Extension:    ".html",
+		Master:       "layouts/master",
+		Partials:     []string{},
+		Funcs:        make(template.FuncMap),
+		DisableCache: false,
+		Delims:       goview.Delims{Left: "{{", Right: "}}"},
+	}
+
+	router.HTMLRender = ginview.New(CustomConfig)
 
 	router.Static("/static", "./static")
 	router.StaticFile("/favicon.ico", "./static/images/favicon.ico")
@@ -36,21 +49,68 @@ func Routes(router *gin.Engine) {
 		})
 	})
 
-	router.GET("/tools", func(ctx *gin.Context) {
-		ctx.HTML(http.StatusOK, "tools", gin.H{
-			"title": "Tools",
+	router.GET("/rankings", func(ctx *gin.Context) {
+		ctx.HTML(http.StatusOK, "rankings", gin.H{
+			"title": "Rankings",
 		})
 	})
 
-	router.GET("/gamin", func(ctx *gin.Context) {
-		ctx.HTML(http.StatusOK, "gamin", gin.H{
-			"title": "Gamin",
+	router.GET("/api/logs-data", func(c *gin.Context) {
+		resp, err := warcraftlogs.GetData()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"data": resp,
 		})
 	})
 
-	router.GET("/cars", func(ctx *gin.Context) {
-		ctx.HTML(http.StatusOK, "cars", gin.H{
-			"title": "Cars",
+	router.GET("/api/ranking-data", func(c *gin.Context) {
+		var req warcraftlogs.RankingRequest
+
+		if err := c.ShouldBindQuery(&req); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
+
+		resp, guildId, guildFaction, err := warcraftlogs.GetRanking(req)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"data":         resp.GuildData.Guild.ZoneRanking,
+			"guildId":      guildId,
+			"guildFaction": guildFaction,
+		})
+	})
+
+	router.GET("/api/char-data", func(c *gin.Context) {
+		var req warcraftlogs.CharRequest
+
+		if err := c.ShouldBindQuery(&req); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
+
+		resp, err := warcraftlogs.GetChars(req)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"data": resp,
 		})
 	})
 }

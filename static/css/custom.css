@@ -1,0 +1,117 @@
+@layer components {
+	.artifact {
+		color: #e5cc80;
+	}
+	.astounding {
+		color: #e268a8;
+	}
+	.legendary {
+		color: #ff8000;
+	}
+	.epic {
+		color: #a335ee;
+	}
+	.rare {
+		color: #0070ff;
+	}
+	.uncommon {
+		color: #1eff00;
+	}
+	.common {
+		color: #666;
+	}
+	.DeathKnight {
+		color: #c41f3b;
+	}
+	.Druid {
+		color: #ff7d0a;
+	}
+	.Hunter {
+		color: #abd473;
+	}
+	.Mage {
+		color: #69ccf0;
+	}
+	.Paladin {
+		color: #f58cba;
+	}
+	.Priest {
+		color: #fff;
+	}
+	.Rogue {
+		color: #ffff8f;
+	}
+	.Shaman {
+		color: #2459ff;
+	}
+	.Warlock {
+		color: #9482c9;
+	}
+	.Warrior {
+		color: #c79c6e;
+	}
+	.Horde {
+		color: rgb(224, 41, 41);
+	}
+	.Alliance {
+		color: rgb(102, 153, 255);
+	}
+	.transparent {
+		opacity: 0.75;
+	}
+	#guild_display_wrapper {
+		position: relative;
+		overflow: hidden;
+		width: 100%;
+		height: 100%;
+	}
+	#guild_display {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-repeat: no-repeat;
+		background-size: contain;
+		background-blend-mode: darken;
+		background-color: rgba(0, 0, 0, 0.4);
+		overflow: hidden;
+	}
+	#guild_content {
+		position: relative;
+		z-index: 1;
+		padding: 2rem;
+	}
+	.blurred {
+		filter: blur(4px);
+		pointer-events: none;
+	}
+	.loading-overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.5);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		z-index: 10;
+	}
+	.loading-spinner {
+		width: 40px;
+		height: 40px;
+		border: 4px solid #fff;
+		border-top: 4px solid transparent;
+		border-radius: 50%;
+		animation: spin 1s linear infinite;
+	}
+	@keyframes spin {
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+}

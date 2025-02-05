@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS zones (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    zone_id INT NOT NULL UNIQUE,
+    expansion_id INT NOT NULL,
+    zone_name VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY (zone_id, expansion_id),
+    FOREIGN KEY (expansion_id) REFERENCES expansions(expansion_id) ON DELETE CASCADE
+);
