@@ -157,7 +157,7 @@ export default {
 		<div id="guild_display" class="bg-fixed bg-center bg-no-repeat bg-cover" :style="{ backgroundImage: `url('./static/images/raid_backgrounds/zone_${selectedZone.zone_id}.jpg')` }"></div>
 		<div id="guild_content">
 			<h2 class="text-4xl mt-5 mb-5 text-center">{{ selectedZone.zone_name }}</h2>
-			<h2 class="text-4xl mt-5 mb-5 text-center"><span :class="guildFaction">{{ guildName }}</span> Guild Ranking</h2>
+			<h2 class="text-4xl mt-5 mb-5 text-center"><span :class="guildFaction"><strong>{{ guildName }}</strong></span> Guild Ranking</h2>
 			<div class="flex justify-center transparent">
 				<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl w-full p-4">
 					<div class="p-4 bg-gray-800 shadow rounded text-center">
