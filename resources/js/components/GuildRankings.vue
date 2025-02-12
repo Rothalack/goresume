@@ -156,8 +156,12 @@ export default {
 		</button>
 		<div id="guild_display" class="bg-fixed bg-center bg-no-repeat bg-cover" :style="{ backgroundImage: `url('./static/images/raid_backgrounds/zone_${selectedZone.zone_id}.jpg')` }"></div>
 		<div id="guild_content">
-			<h2 class="text-4xl mt-5 mb-5 text-center">{{ selectedZone.zone_name }}</h2>
-			<h2 class="text-4xl mt-5 mb-5 text-center"><span :class="guildFaction"><strong>{{ guildName }}</strong></span> Guild Ranking</h2>
+			<div class="flex justify-center transparent">
+				<div class="gap-4 max-w-4xl w-full p-4 bg-gray-800 shadow rounded">
+					<h2 class="text-4xl mt-5 mb-5 text-center">{{ selectedZone.zone_name }}</h2>
+					<h2 class="text-3xl mt-5 mb-5 text-center"><span :class="guildFaction"><strong>{{ guildName }}</strong></span> Guild Ranking</h2>
+				</div>
+			</div>
 			<div class="flex justify-center transparent">
 				<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl w-full p-4">
 					<div class="p-4 bg-gray-800 shadow rounded text-center">
@@ -180,7 +184,7 @@ export default {
 					</div>
 				</div>
 			</div>
-			<h2 class="text-4xl mt-5 mb-5 text-center">Characters</h2>
+			<h2 class="text-4xl mt-5 mb-5 text-center">Roster</h2>
 			<div class="flex justify-center transparent">
 				<div class="max-w-4xl w-full">
 					<div v-for="(charDatum, charIndex) in charData" class="max-w-4xl w-full">
@@ -258,7 +262,7 @@ export default {
 				</select>
 			</div>
 
-			<div class="mb-5" id="difficulty-input" v-if="selectedZone && selectedZone.difficulty">
+			<div class="mb-5" id="difficulty-input" v-if="selectedZone && selectedZone.difficulty && selectedZone.difficulty.length > 1">
 				<label for="difficulty" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
 					Difficulty
 				</label>
@@ -269,7 +273,7 @@ export default {
 				</select>
 			</div>
 
-			<div class="mb-5" id="size-input" v-if="selectedDifficulty && selectedDifficulty.sizes">
+			<div class="mb-5" id="size-input" v-if="selectedDifficulty && selectedDifficulty.sizes && selectedDifficulty.sizes.length > 1">
 				<label for="size" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Size</label>
 				<select id="difficulty" v-model="selectedSize" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 					<option v-for="option in selectedDifficulty.sizes" :key="option.size" :value="option.size">

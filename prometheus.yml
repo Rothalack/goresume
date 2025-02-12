@@ -1,0 +1,14 @@
+scrape_configs:
+    - job_name: 'goresume_dev'
+      static_configs:
+          - targets: ['localhost:33380']
+      metrics_path: '/metrics'
+      scheme: 'http'
+
+    - job_name: 'goresume_prod'
+      static_configs:
+          - targets: ['brian-schaaf.com', 'frothy.dev']
+      metrics_path: '/metrics'
+      scheme: 'https'
+      tls_config:
+      insecure_skip_verify: false

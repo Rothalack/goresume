@@ -1,0 +1,10 @@
+{
+	"printWidth": 180,
+	"singleAttributePerLine": false,
+	"htmlWhitespaceSensitivity": "strict",
+	"bracketSameLine": true,
+	"tabWidth": 4,
+	"useTabs": true,
+	"semi": true,
+	"endOfLine": "auto"
+}

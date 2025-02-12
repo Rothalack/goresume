@@ -10,7 +10,7 @@ npx webpack --mode development --watch --no-cache
 
 **BIG TODOs**
 **logging/error logging**
-Something to compile errors and logs into somewhere searchable. Google has a free option I think. Used Relix before.
+Something to compile errors and logs into somewhere searchable. Prometheus+Grafana?
 
 **Release System**
 Simple and just have releases set up on github?

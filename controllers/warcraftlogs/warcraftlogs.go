@@ -161,6 +161,9 @@ func GetRanking(guildData RankingRequest) (*GuildZoneRankings, int, string, erro
 	serverSlug := guildData.ServerSlug
 	regionSlug := guildData.RegionSlug
 	baseUrl := guildData.ApiUrl
+	zoneId := guildData.ZoneId
+	difficultyId := guildData.DifficultyId
+	size := guildData.Size
 
 	SetGameContext(baseUrl)
 
@@ -173,10 +176,6 @@ func GetRanking(guildData RankingRequest) (*GuildZoneRankings, int, string, erro
 	if guildId < 1 {
 		return nil, 0, "", fmt.Errorf("failed to find guild")
 	}
-
-	zoneId := guildData.ZoneId
-	difficultyId := guildData.DifficultyId
-	size := guildData.Size
 
 	accessToken, err := getAccessToken()
 	if err != nil {

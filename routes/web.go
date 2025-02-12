@@ -55,6 +55,10 @@ func Routes(router *gin.Engine) {
 		})
 	})
 
+	router.GET("/test", func(ctx *gin.Context) {
+		ctx.File("resources/views/test.html")
+	})
+
 	router.GET("/api/logs-data", func(c *gin.Context) {
 		resp, err := warcraftlogs.GetData()
 		if err != nil {

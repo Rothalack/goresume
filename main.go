@@ -15,6 +15,9 @@ func main() {
 
 	router := gin.Default()
 
+	router.Use(config.PrometheusMiddleware())
+	config.SetupPrometheus(router)
+
 	routes.Routes(router)
 
 	config.GetEnvironment(router)
