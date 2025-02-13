@@ -9,24 +9,25 @@
 			function gtag() {
 				dataLayer.push(arguments);
 			}
-			gtag("js", new Date());
+			gtag('js', new Date());
 
-			gtag("config", "G-P5ZXE7FKTW");
+			gtag('config', 'G-P5ZXE7FKTW');
 		</script>
 		<title>{{.title}}</title>
 		{{template "head" .}}
 		<link href="/static/css/output.css" rel="stylesheet" />
 		<script src="/static/js/bundle.js" defer></script>
 		<script src="https://kit.fontawesome.com/b7634a1a6c.js" crossorigin="anonymous"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 	</head>
 
 	<body>
 		<div class="min-h-screen bg-slate-950">
 			<header class="p-4 bg-slate-900 text-white text-center">
-				<nav class="container mx-auto flex justify-end items-center space-x-4">
+				<nav class="w-full px-4 md:container flex justify-end items-center space-x-4">
 					<a href="/" class="text-sm font-semibold px-3 py-1 rounded hover:bg-gray-800 hover:text-gray-200 transition-all"> Home </a>
 					<a href="/resume" class="text-sm font-semibold px-3 py-1 rounded hover:bg-gray-800 hover:text-gray-200 transition-all"> CV </a>
-					<a href="/gohard" class="text-sm font-semibold px-3 py-1 rounded hover:bg-gray-800 hover:text-gray-200 transition-all"> Go Hard </a>
+					<a href="/gohard" class="text-sm font-semibold px-3 py-1 rounded hover:bg-gray-800 hover:text-gray-200 transition-all"> Try Hard </a>
 					<a href="/rankings" class="text-sm font-semibold px-3 py-1 rounded hover:bg-gray-800 hover:text-gray-200 transition-all"> Rankings </a>
 					<!-- <a href="/gamin" class="text-sm font-semibold px-3 py-1 rounded hover:bg-gray-800 hover:text-gray-200 transition-all">
                         Gamin

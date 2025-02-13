@@ -1,10 +1,9 @@
 {{define "head"}} {{end}} {{define "content"}}
 <section class="max-w-5xl mx-auto">
-	<div class="grid grid-cols-4 p-4 bg-slate-900">
-		<!-- left bar -->
-		<div class="col-span-1 p-2">
+	<div class="lg:flex hidden lg:space-x-4 bg-slate-900 p-4 rounded-lg">
+		<div class="lg:w-1/4 space-y-4">
 			<div class="mb-4">
-				<img src="/static/images/headshot.png" class="w-56 h-56 rounded-full shadow-xl border-4 border-sky-400/20" />
+				<img src="/static/images/headshot.png" alt="headshot" class="rounded-full shadow-xl border-4 border-sky-400/20" />
 			</div>
 			<div class="bg-slate-800 rounded-lg p-3 mb-4">
 				<h2 class="text-xl font-bold mb-4 text-sky-400">Professional Summary</h2>
@@ -44,7 +43,7 @@
 					<span class="px-3 py-1 bg-slate-700 rounded-lg text-sky-400 text-sm">GitHub Codespaces</span>
 				</ul>
 			</div>
-			<div class="bg-slate-800 rounded-lg p-3 mb-4">
+			<div class="bg-slate-800 rounded-lg p-3">
 				<h2 class="text-xl font-bold mb-2 text-sky-400">Education</h2>
 				<p class="text-gray-300 font-bold">BS in Computer and Information Science</p>
 				<p class="text-gray-400">ECPI University, Glen Allen, VA</p>
@@ -54,40 +53,184 @@
 				<p class="text-gray-500">Sep 2008 - May 2010</p>
 			</div>
 		</div>
-		<!-- content -->
-		<div class="col-span-3 p-4">
-			<div class="grid grid-cols-2 col-span-2 mb-4 p-6 bg-slate-800 rounded-lg">
-				<div class="col-span-2 p-4">
-					<h1 class="text-5xl font-bold bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent"> Brian Schaaf </h1>
+		<div class="lg:w-3/4 space-y-4">
+			<div class="grid grid-cols-3 p-6 bg-slate-800 rounded-lg">
+				<div class="col-span-3 p-4">
+					<h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-sky-400">Brian Schaaf</h1>
 					<p class="text-xl text-gray-400 mt-2">Software Engineer</p>
 				</div>
-				<div class="flex gap-4 mt-1 ml-4">
-					<span>
-						<a href="https://www.github.com/rothalack" class="flex items-center gap-2 text-gray-400 hover:text-sky-400 transition-colors">
-							<i class="fa-brands fa-github fa-xl"></i>
-							GitHub
-						</a>
-					</span>
+				<div class="flex items-center gap-2">
+					<a href="https://www.github.com/rothalack" class="text-gray-400 hover:text-sky-400 transition-colors">
+						<i class="fa-brands fa-github fa-xl"></i>
+						GitHub
+					</a>
 				</div>
-				<div class="flex gap-4 mt-1">
-					<span>
-						<a href="https://www.linkedin.com/in/brian-schaaf-6b23b771/" class="flex items-center gap-2 text-gray-400 hover:text-sky-400 transition-colors">
-							<i class="fa-brands fa-linkedin fa-xl"></i>
-							LinkedIn
-						</a>
-					</span>
+				<div class="flex items-center gap-2">
+					<a href="https://www.linkedin.com/in/brian-schaaf-6b23b771/" class="text-gray-400 hover:text-sky-400 transition-colors">
+						<i class="fa-brands fa-linkedin fa-xl"></i>
+						LinkedIn
+					</a>
 				</div>
 			</div>
-			<div class="mb-4 p-6 bg-slate-800 rounded-lg">
-				<h2 class="text-xl font-bold mb-4 text-sky-400">Professional Experience</h2>
-				<div class="flex justify-between items-start mb-2">
-					<div>
-						<h3 class="text-gray-300 font-bold">Senior Software Engineer</h3>
-						<p class="text-gray-400">PubWise.io, Atlanta, GA</p>
+			<div class="">
+				<div class="p-6 bg-slate-800 rounded-lg">
+					<h2 class="text-xl font-bold mb-4 text-sky-400">Professional Experience</h2>
+					<div class="flex flex-col md:flex-row justify-between items-start mb-2">
+						<div>
+							<h3 class="text-gray-300 font-bold">Senior Software Engineer</h3>
+							<p class="text-gray-400">PubWise.io, Atlanta, GA</p>
+						</div>
+						<p class="text-gray-500">Jun 2017 - Present</p>
 					</div>
-					<p class="text-gray-500">Jun 2017 - Present</p>
+					<ul class="list-disc pl-6 text-gray-300 mb-4">
+						<li class="hover:bg-gray-700 p-0 rounded">
+							Designed, implemented, and maintained accounting data ingestion systems and configuration platforms for Prebid.js.
+						</li>
+						<li class="hover:bg-gray-700 p-0 rounded">
+							Contributed to the Prebid.js open-source project by reviewing and approving pull requests for ad adapter integrations, ensuring code quality and timely
+							releases.
+						</li>
+						<li class="hover:bg-gray-700 p-0 rounded">
+							Began serving as a code reviewer for Prebid Server Go to maintain quality and functionality in server-side integrations.
+						</li>
+					</ul>
+					<div class="flex justify-between items-start mb-2">
+						<div>
+							<h3 class="text-gray-300 font-bold">Senior Software Engineer</h3>
+							<p class="text-gray-400">Launch Media Network, Atlanta, GA</p>
+						</div>
+						<p class="text-gray-500">Apr 2013 - Present</p>
+					</div>
+					<ul class="list-disc pl-6 text-gray-300 mb-4">
+						<li class="hover:bg-gray-700 p-0 rounded">
+							Developed and maintained Guild Launch and GameSkinny platforms, providing streamlined web content management systems for gaming communities.
+						</li>
+						<li class="hover:bg-gray-700 p-0 rounded">
+							Optimized site performance by improving database query efficiency, reducing page load times, and enhancing the user experience.
+						</li>
+					</ul>
+					<div class="flex justify-between items-start mb-2">
+						<div>
+							<h3 class="text-gray-300 font-bold">Webmaster</h3>
+							<p class="text-gray-400">Lynchburg College Student Newspaper, Lynchburg, VA</p>
+						</div>
+						<p class="text-gray-500">2009 - 2010</p>
+					</div>
+					<ul class="list-disc pl-6 text-gray-300 mb-4">
+						<li class="hover:bg-gray-700 p-0 rounded"> Maintained and updated the student newspaper's CMS-based website. </li>
+						<li class="hover:bg-gray-700 p-0 rounded"> Uploaded articles, resolved technical issues, and ensured the site remained operational and up-to-date. </li>
+					</ul>
+					<div class="flex justify-between items-start mb-2">
+						<div>
+							<h3 class="text-gray-300 font-bold">Open-Source Contributions</h3>
+						</div>
+						<p class="text-gray-500">2020 - Present</p>
+					</div>
+					<ul class="list-disc pl-6 text-gray-300">
+						<li class="hover:bg-gray-700 p-0 rounded">
+							Prebid.js: Active contributor and code reviewer for adapter integrations, ensuring high standards for community-driven projects.
+						</li>
+						<li class="hover:bg-gray-700 p-0 rounded"> Prebid Server Go: New code reviewer, participating in maintaining and optimizing server-side implementations. </li>
+					</ul>
 				</div>
-				<ul class="list-disc pl-6 text-gray-300">
+			</div>
+			<div class="">
+				<div class="p-6 bg-slate-800 rounded-lg">
+					<h2 class="text-xl font-bold mb-4 text-sky-400">Personal Project</h2>
+					<div class="flex justify-between items-start mb-2">
+						<div>
+							<h3 class="text-gray-300 font-bold"> Co-Founder & Operations Strategist, Competitive World of Warcraft Guild </h3>
+						</div>
+						<p class="text-gray-500">2017 - 2022</p>
+					</div>
+					<ul class="list-disc pl-6 text-gray-300">
+						<li class="hover:bg-gray-700 p-0 rounded">
+							Co-founded and managed a globally competitive guild, achieving multiple top global rankings in Classic World of Warcraft.
+						</li>
+						<li class="hover:bg-gray-700 p-0 rounded"> Hosted and maintained a private test server on Google Cloud to replicate live conditions for raid preparation. </li>
+						<li class="hover:bg-gray-700 p-0 rounded"> Streamlined communication and coordination via Discord, website management, and documentation. </li>
+						<li class="hover:bg-gray-700 p-0 rounded"> Oversaw financial operations, including budgeting and resource allocation for raid consumables. </li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="lg:hidden space-y-4 bg-slate-900 p-4 rounded-lg">
+		<div class="mb-4">
+			<img src="/static/images/headshot.png" alt="headshot" class="rounded-full shadow-xl border-4 border-sky-400/20" />
+		</div>
+		<div class="grid grid-cols-3 p-6 bg-slate-800 rounded-lg self-start">
+			<div class="col-span-3 p-4">
+				<h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-sky-400">Brian Schaaf</h1>
+				<p class="text-xl text-gray-400 mt-2">Software Engineer</p>
+			</div>
+			<div class="flex items-center gap-2">
+				<a href="https://www.github.com/rothalack" class="text-gray-400 hover:text-sky-400 transition-colors">
+					<i class="fa-brands fa-github fa-xl"></i>
+					GitHub
+				</a>
+			</div>
+			<div class="flex items-center gap-2">
+				<a href="https://www.linkedin.com/in/brian-schaaf-6b23b771/" class="text-gray-400 hover:text-sky-400 transition-colors">
+					<i class="fa-brands fa-linkedin fa-xl"></i>
+					LinkedIn
+				</a>
+			</div>
+		</div>
+		<div class="bg-slate-800 rounded-lg p-3 mb-4">
+			<h2 class="text-xl font-bold mb-4 text-sky-400">Professional Summary</h2>
+			<p class="text-gray-300">
+				Software Engineer with over 10 years of experience developing scalable web applications and optimizing backend systems. Proficient in PHP, Javascript, Go, and
+				cloud infrastructure, with a track record of contributing to high-impact projects.
+			</p>
+		</div>
+		<div class="bg-slate-800 rounded-lg p-3 mb-4">
+			<h2 class="text-xl font-bold mb-4 text-sky-400">Skills</h2>
+			<ul class="text-gray-300">
+				<li class="mb-2">
+					Programming Languages
+					<br />
+					<span class="px-3 py-1 bg-slate-700 rounded-lg text-sky-400 text-sm">PHP</span>
+					<span class="px-3 py-1 bg-slate-700 rounded-lg text-sky-400 text-sm">JavaScript</span>
+					<span class="px-3 py-1 bg-slate-700 rounded-lg text-sky-400 text-sm">Go</span>
+				</li>
+				<li class="mb-2">
+					Frameworks
+					<br />
+					<span class="px-3 py-1 bg-slate-700 rounded-lg text-sky-400 text-sm">Laravel</span>
+					<span class="px-3 py-1 bg-slate-700 rounded-lg text-sky-400 text-sm">VueJS</span>
+				</li>
+				<li class="mb-2">
+					Cloud Platforms
+					<br />
+					<span class="px-3 py-1 bg-slate-700 rounded-lg text-sky-400 text-sm">Google Cloud</span>
+				</li>
+				<li class="mb-2">
+					Tools
+					<br />
+					<span class="px-3 py-1 bg-slate-700 rounded-lg text-sky-400 text-sm">Docker</span>
+					<span class="px-3 py-1 bg-slate-700 rounded-lg text-sky-400 text-sm">Kubernetes</span>
+					<span class="px-2 py-1 bg-slate-700 rounded-lg text-sky-400 text-sm">Git</span>
+				</li>
+				<span class="px-3 py-1 bg-slate-700 rounded-lg text-sky-400 text-sm">GitHub Codespaces</span>
+			</ul>
+		</div>
+		<div class="bg-slate-800 rounded-lg p-3">
+			<h2 class="text-xl font-bold mb-2 text-sky-400">Education</h2>
+			<p class="text-gray-300 font-bold">BS in Computer and Information Science</p>
+			<p class="text-gray-400">ECPI University, Glen Allen, VA</p>
+			<p class="text-gray-500">Graduated: Jul 2014</p>
+			<p class="text-gray-300 font-bold mt-2">Bachelor's Coursework in Communications</p>
+			<p class="text-gray-400">Lynchburg College, Lynchburg, VA</p>
+			<p class="text-gray-500">Sep 2008 - May 2010</p>
+		</div>
+		<div class="">
+			<div class="p-6 bg-slate-800 rounded-lg">
+				<h2 class="text-xl font-bold mb-4 text-sky-400">Professional Experience</h2>
+				<h3 class="text-gray-300 font-bold">Senior Software Engineer</h3>
+				<p class="text-gray-400">PubWise.io, Atlanta, GA</p>
+				<p class="text-gray-500">Jun 2017 - Present</p>
+				<ul class="list-disc pl-6 text-gray-300 mb-4">
 					<li class="hover:bg-gray-700 p-0 rounded">
 						Designed, implemented, and maintained accounting data ingestion systems and configuration platforms for Prebid.js.
 					</li>
@@ -99,16 +242,10 @@
 						Began serving as a code reviewer for Prebid Server Go to maintain quality and functionality in server-side integrations.
 					</li>
 				</ul>
-			</div>
-			<div class="mb-4 p-6 bg-slate-800 rounded-lg">
-				<div class="flex justify-between items-start mb-2">
-					<div>
-						<h3 class="text-gray-300 font-bold">Senior Software Engineer</h3>
-						<p class="text-gray-400">Launch Media Network, Atlanta, GA</p>
-					</div>
-					<p class="text-gray-500">Apr 2013 - Present</p>
-				</div>
-				<ul class="list-disc pl-6 text-gray-300">
+				<h3 class="text-gray-300 font-bold">Senior Software Engineer</h3>
+				<p class="text-gray-400">Launch Media Network, Atlanta, GA</p>
+				<p class="text-gray-500">Apr 2013 - Present</p>
+				<ul class="list-disc pl-6 text-gray-300 mb-4">
 					<li class="hover:bg-gray-700 p-0 rounded">
 						Developed and maintained Guild Launch and GameSkinny platforms, providing streamlined web content management systems for gaming communities.
 					</li>
@@ -116,8 +253,150 @@
 						Optimized site performance by improving database query efficiency, reducing page load times, and enhancing the user experience.
 					</li>
 				</ul>
+				<h3 class="text-gray-300 font-bold">Webmaster</h3>
+				<p class="text-gray-400">Lynchburg College Student Newspaper, Lynchburg, VA</p>
+				<p class="text-gray-500">2009 - 2010</p>
+				<ul class="list-disc pl-6 text-gray-300 mb-4">
+					<li class="hover:bg-gray-700 p-0 rounded"> Maintained and updated the student newspaper's CMS-based website. </li>
+					<li class="hover:bg-gray-700 p-0 rounded"> Uploaded articles, resolved technical issues, and ensured the site remained operational and up-to-date. </li>
+				</ul>
+				<h3 class="text-gray-300 font-bold">Open-Source Contributions</h3>
+				<p class="text-gray-500">2020 - Present</p>
+				<ul class="list-disc pl-6 text-gray-300">
+					<li class="hover:bg-gray-700 p-0 rounded">
+						Prebid.js: Active contributor and code reviewer for adapter integrations, ensuring high standards for community-driven projects.
+					</li>
+					<li class="hover:bg-gray-700 p-0 rounded"> Prebid Server Go: New code reviewer, participating in maintaining and optimizing server-side implementations. </li>
+				</ul>
 			</div>
-			<div class="mb-4 p-6 bg-slate-800 rounded-lg">
+		</div>
+		<div class="">
+			<div class="p-6 bg-slate-800 rounded-lg">
+				<h2 class="text-xl font-bold mb-4 text-sky-400">Personal Project</h2>
+				<h3 class="text-gray-300 font-bold"> Co-Founder & Operations Strategist, Competitive World of Warcraft Guild </h3>
+				<p class="text-gray-500">2017 - 2022</p>
+				<ul class="list-disc pl-6 text-gray-300">
+					<li class="hover:bg-gray-700 p-0 rounded">
+						Co-founded and managed a globally competitive guild, achieving multiple top global rankings in Classic World of Warcraft.
+					</li>
+					<li class="hover:bg-gray-700 p-0 rounded"> Hosted and maintained a private test server on Google Cloud to replicate live conditions for raid preparation. </li>
+					<li class="hover:bg-gray-700 p-0 rounded"> Streamlined communication and coordination via Discord, website management, and documentation. </li>
+					<li class="hover:bg-gray-700 p-0 rounded"> Oversaw financial operations, including budgeting and resource allocation for raid consumables. </li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- <section class="max-w-5xl mx-auto">
+	<div class="grid grid-cols-1 lg:grid-cols-4 gap-4 p-4 bg-slate-900">
+		<div class="col-span-1 self-start">
+			<div class="mb-4">
+				<img src="/static/images/headshot.png" alt="headshot" class="rounded-full shadow-xl border-4 border-sky-400/20" />
+			</div>
+			<div class="bg-slate-800 rounded-lg p-3 mb-4">
+				<h2 class="text-xl font-bold mb-4 text-sky-400">Professional Summary</h2>
+				<p class="text-gray-300">
+					Software Engineer with over 10 years of experience developing scalable web applications and optimizing backend systems. Proficient in PHP, Javascript, Go, and
+					cloud infrastructure, with a track record of contributing to high-impact projects.
+				</p>
+			</div>
+			<div class="bg-slate-800 rounded-lg p-3 mb-4">
+				<h2 class="text-xl font-bold mb-4 text-sky-400">Skills</h2>
+				<ul class="text-gray-300">
+					<li class="mb-2">
+						Programming Languages
+						<br />
+						<span class="px-3 py-1 bg-slate-700 rounded-lg text-sky-400 text-sm">PHP</span>
+						<span class="px-3 py-1 bg-slate-700 rounded-lg text-sky-400 text-sm">JavaScript</span>
+						<span class="px-3 py-1 bg-slate-700 rounded-lg text-sky-400 text-sm">Go</span>
+					</li>
+					<li class="mb-2">
+						Frameworks
+						<br />
+						<span class="px-3 py-1 bg-slate-700 rounded-lg text-sky-400 text-sm">Laravel</span>
+						<span class="px-3 py-1 bg-slate-700 rounded-lg text-sky-400 text-sm">VueJS</span>
+					</li>
+					<li class="mb-2">
+						Cloud Platforms
+						<br />
+						<span class="px-3 py-1 bg-slate-700 rounded-lg text-sky-400 text-sm">Google Cloud</span>
+					</li>
+					<li class="mb-2">
+						Tools
+						<br />
+						<span class="px-3 py-1 bg-slate-700 rounded-lg text-sky-400 text-sm">Docker</span>
+						<span class="px-3 py-1 bg-slate-700 rounded-lg text-sky-400 text-sm">Kubernetes</span>
+						<span class="px-2 py-1 bg-slate-700 rounded-lg text-sky-400 text-sm">Git</span>
+					</li>
+					<span class="px-3 py-1 bg-slate-700 rounded-lg text-sky-400 text-sm">GitHub Codespaces</span>
+				</ul>
+			</div>
+			<div class="bg-slate-800 rounded-lg p-3">
+				<h2 class="text-xl font-bold mb-2 text-sky-400">Education</h2>
+				<p class="text-gray-300 font-bold">BS in Computer and Information Science</p>
+				<p class="text-gray-400">ECPI University, Glen Allen, VA</p>
+				<p class="text-gray-500">Graduated: Jul 2014</p>
+				<p class="text-gray-300 font-bold mt-2">Bachelor's Coursework in Communications</p>
+				<p class="text-gray-400">Lynchburg College, Lynchburg, VA</p>
+				<p class="text-gray-500">Sep 2008 - May 2010</p>
+			</div>
+		</div>
+		<div class="col-span-1 lg:col-start-2 lg:col-span-3 grid grid-cols-3 p-6 bg-slate-800 rounded-lg self-start">
+			<div class="col-span-3 p-4">
+				<h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-sky-400">Brian Schaaf</h1>
+				<p class="text-xl text-gray-400 mt-2">Software Engineer</p>
+			</div>
+			<div class="flex items-center gap-2">
+				<a href="https://www.github.com/rothalack" class="text-gray-400 hover:text-sky-400 transition-colors">
+					<i class="fa-brands fa-github fa-xl"></i>
+					GitHub
+				</a>
+			</div>
+			<div class="flex items-center gap-2">
+				<a href="https://www.linkedin.com/in/brian-schaaf-6b23b771/" class="text-gray-400 hover:text-sky-400 transition-colors">
+					<i class="fa-brands fa-linkedin fa-xl"></i>
+					LinkedIn
+				</a>
+			</div>
+		</div>
+		<div class="col-span-1 lg:col-start-2 lg:col-span-3 self-start">
+			<div class="p-6 bg-slate-800 rounded-lg">
+				<h2 class="text-xl font-bold mb-4 text-sky-400">Professional Experience</h2>
+				<div class="flex flex-col md:flex-row justify-between items-start mb-2">
+					<div>
+						<h3 class="text-gray-300 font-bold">Senior Software Engineer</h3>
+						<p class="text-gray-400">PubWise.io, Atlanta, GA</p>
+					</div>
+					<p class="text-gray-500">Jun 2017 - Present</p>
+				</div>
+				<ul class="list-disc pl-6 text-gray-300 mb-4">
+					<li class="hover:bg-gray-700 p-0 rounded">
+						Designed, implemented, and maintained accounting data ingestion systems and configuration platforms for Prebid.js.
+					</li>
+					<li class="hover:bg-gray-700 p-0 rounded">
+						Contributed to the Prebid.js open-source project by reviewing and approving pull requests for ad adapter integrations, ensuring code quality and timely
+						releases.
+					</li>
+					<li class="hover:bg-gray-700 p-0 rounded">
+						Began serving as a code reviewer for Prebid Server Go to maintain quality and functionality in server-side integrations.
+					</li>
+				</ul>
+				<div class="flex justify-between items-start mb-2">
+					<div>
+						<h3 class="text-gray-300 font-bold">Senior Software Engineer</h3>
+						<p class="text-gray-400">Launch Media Network, Atlanta, GA</p>
+					</div>
+					<p class="text-gray-500">Apr 2013 - Present</p>
+				</div>
+				<ul class="list-disc pl-6 text-gray-300 mb-4">
+					<li class="hover:bg-gray-700 p-0 rounded">
+						Developed and maintained Guild Launch and GameSkinny platforms, providing streamlined web content management systems for gaming communities.
+					</li>
+					<li class="hover:bg-gray-700 p-0 rounded">
+						Optimized site performance by improving database query efficiency, reducing page load times, and enhancing the user experience.
+					</li>
+				</ul>
 				<div class="flex justify-between items-start mb-2">
 					<div>
 						<h3 class="text-gray-300 font-bold">Webmaster</h3>
@@ -125,12 +404,10 @@
 					</div>
 					<p class="text-gray-500">2009 - 2010</p>
 				</div>
-				<ul class="list-disc pl-6 text-gray-300">
+				<ul class="list-disc pl-6 text-gray-300 mb-4">
 					<li class="hover:bg-gray-700 p-0 rounded"> Maintained and updated the student newspaper's CMS-based website. </li>
 					<li class="hover:bg-gray-700 p-0 rounded"> Uploaded articles, resolved technical issues, and ensured the site remained operational and up-to-date. </li>
 				</ul>
-			</div>
-			<div class="mb-4 p-6 bg-slate-800 rounded-lg">
 				<div class="flex justify-between items-start mb-2">
 					<div>
 						<h3 class="text-gray-300 font-bold">Open-Source Contributions</h3>
@@ -144,6 +421,8 @@
 					<li class="hover:bg-gray-700 p-0 rounded"> Prebid Server Go: New code reviewer, participating in maintaining and optimizing server-side implementations. </li>
 				</ul>
 			</div>
+		</div>
+		<div class="col-span-1 lg:col-span-3 lg:col-start-2">
 			<div class="p-6 bg-slate-800 rounded-lg">
 				<h2 class="text-xl font-bold mb-4 text-sky-400">Personal Project</h2>
 				<div class="flex justify-between items-start mb-2">
@@ -163,5 +442,5 @@
 			</div>
 		</div>
 	</div>
-</section>
+</section> -->
 {{end}} {{define "pagejs"}} {{end}}
