@@ -151,19 +151,19 @@ export default {
 		{{ errorMessage }}
 	</div>
 	<div id="guild_display_wrapper" v-if="rankingData">
-		<button @click="resetForm" class="reset-btn absolute p-4 bg-gray-800 hover:bg-gray-700 focus:ring-1 focus:ring-gray-300 bg-opacity-50 top-4 right-4 rounded text-white hover:bg-opacity-75 z-10">
+		<button @click="resetForm" class="reset-btn absolute p-4 bg-gray-800 hover:bg-gray-700 focus:ring-1 focus:ring-gray-300 bg-opacity-50 top-1 right-1 lg:top-2 lg:right-2 rounded text-white hover:bg-opacity-75 z-10">
 			<i class="fas fa-times"></i>
 		</button>
-		<div id="guild_display" class="bg-fixed bg-center bg-no-repeat bg-cover" :style="{ backgroundImage: `url('./static/images/raid_backgrounds/zone_${selectedZone.zone_id}.jpg')` }"></div>
+		<div id="guild_display" class="lg:bg-contain bg-fixed bg-center bg-no-repeat bg-cover" :style="{ backgroundImage: `url('./static/images/raid_backgrounds/zone_${selectedZone.zone_id}.jpg')` }"></div>
 		<div id="guild_content">
-			<div class="flex justify-center transparent">
+			<div class="flex justify-center transparent p-4">
 				<div class="gap-4 max-w-4xl w-full p-4 bg-gray-800 shadow rounded">
 					<h2 class="text-4xl mt-5 mb-5 text-center">{{ selectedZone.zone_name }}</h2>
 					<h2 class="text-3xl mt-5 mb-5 text-center"><span :class="guildFaction"><strong>{{ guildName }}</strong></span> Guild Ranking</h2>
 				</div>
 			</div>
-			<div class="flex justify-center transparent">
-				<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl w-full p-4">
+			<div class="flex justify-center transparent p-4">
+				<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl w-full">
 					<div class="p-4 bg-gray-800 shadow rounded text-center">
 						<h2 class="text-3xl mt-4">Progression</h2>
 						<p class="mt-4"><span class="text-xl">World</span><span :class="rankingData.progress.worldRank.color" class="text-2xl ml-2">{{ formatNumberSuffix(rankingData.progress.worldRank.number) }}</span></p>
@@ -201,6 +201,7 @@ export default {
 			<div class="loading-spinner"></div>
 		</div>
 		<div class="max-w-sm mx-auto mt-5" v-if="!rankingData">
+			<h3 class="text-2xl mb-4">Search for a WoW Guild Ranking</h3>
 			<div class="mb-5" id="guild-input">
 				<label for="guild" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
 					Guild Name

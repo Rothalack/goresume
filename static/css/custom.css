@@ -93,7 +93,6 @@
 		right: 0;
 		bottom: 0;
 		background-repeat: no-repeat;
-		background-size: contain;
 		background-blend-mode: darken;
 		background-color: rgba(0, 0, 0, 0.4);
 		overflow: hidden;
