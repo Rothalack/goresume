@@ -33,6 +33,8 @@ Go full, have release commands synced with github actions?
 Migrations system? Just hard coded for documentation the migrations in /migrations for now.
 Docker required to go full release hooked up with github actions, with migrations and all?
 
+**Automated Unit Tests**
+
 **Dockerize**
 go app
 mysql

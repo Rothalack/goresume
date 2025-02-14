@@ -1,7 +1,7 @@
 {
   "name": "goresume",
   "scripts": {
-    "dev": "concurrently \"air\" \"npx tailwindcss -i ./static/css/styles.css -o ./static/css/output.css --minify --watch --no-cache\" \"npx webpack --mode development --watch --no-cache\"",
+    "dev": "concurrently \"air -build.exclude_dir node_modules\" \"npx tailwindcss -i ./static/css/styles.css -o ./static/css/output.css --minify --watch --no-cache\" \"npx webpack --mode development --watch --no-cache\"",
     "prod": "npx webpack --mode production --no-cache && npx tailwindcss -i ./static/css/styles.css -o ./static/css/output.css --minify"
   },
   "prettier": {
