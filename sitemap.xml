@@ -1,17 +1,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://frothy.dev/</loc>
-        <lastmod>2025-01-17</lastmod>
+        <lastmod>2025-02-14</lastmod>
         <priority>1.0</priority>
     </url>
     <url>
         <loc>https://frothy.dev/resume/</loc>
-        <lastmod>2025-01-17</lastmod>
+        <lastmod>2025-02-14</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://frothy.dev/gohard/</loc>
-        <lastmod>2025-01-17</lastmod>
+        <lastmod>2025-02-14</lastmod>
         <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://frothy.dev/rankings/</loc>
+        <lastmod>2025-02-14</lastmod>
+        <priority>0.2</priority>
     </url>
 </urlset>

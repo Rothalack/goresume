@@ -9,6 +9,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/machinebox/graphql"
 )
@@ -121,6 +122,14 @@ func SetGameContext(baseUrl string) {
 }
 
 func getAccessToken() (string, error) {
+	redisKey := config.RedisKeyPrefix + "warcraftlogs_access_token"
+
+	token, err := config.RedisClient.Get(redisKey).Result()
+	if err == nil && token != "" {
+		fmt.Println("cached warcraftlogs access token used")
+		return token, nil
+	}
+
 	clientID := config.WarcraftlogsClientId
 	clientSecret := config.WarcraftlogsClientSecret
 
@@ -151,6 +160,10 @@ func getAccessToken() (string, error) {
 	}
 	if err := json.NewDecoder(resp.Body).Decode(&tokenResponse); err != nil {
 		return "", err
+	}
+
+	if err := config.RedisClient.Set(redisKey, tokenResponse.AccessToken, time.Hour).Err(); err != nil {
+		return "", fmt.Errorf("failed to set token in Redis: %w", err)
 	}
 
 	return tokenResponse.AccessToken, nil

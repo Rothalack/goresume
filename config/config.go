@@ -10,14 +10,17 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/go-redis/redis"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
 )
 
 var (
 	DB                       *sql.DB
+	RedisClient              *redis.Client
 	WarcraftlogsClientId     string
 	WarcraftlogsClientSecret string
+	RedisKeyPrefix           string
 )
 
 func GetEnvs() {
@@ -41,6 +44,7 @@ func GetEnvironment(router *gin.Engine) {
 	debug := os.Getenv("DEBUG")
 
 	initMySQL()
+	initRedis()
 
 	if env == "prod" {
 		prod(router, port)
@@ -118,4 +122,28 @@ func initMySQL() {
 	DB.SetMaxOpenConns(50)
 	DB.SetMaxIdleConns(5)
 	DB.SetConnMaxLifetime(time.Minute * 5)
+}
+
+func initRedis() {
+	redisAddr := os.Getenv("REDIS_ADDR")
+	redisPassword := os.Getenv("REDIS_PASSWORD")
+
+	env := os.Getenv("GO_ENV")
+	var redisKeyPrefix string
+
+	if env == "prod" {
+		redisKeyPrefix = "prod_"
+	} else {
+		redisKeyPrefix = "dev_"
+	}
+
+	RedisClient = redis.NewClient(&redis.Options{
+		Addr:     redisAddr,
+		Password: redisPassword,
+		DB:       0,
+	})
+
+	RedisKeyPrefix = redisKeyPrefix
+
+	log.Println("Connected to Redis")
 }
