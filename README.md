@@ -43,8 +43,8 @@ redis
 **Maintanence Mode**
 System for putting the site in maintanence mode. Probably never needed, maybe cool to make.
 
-**Compartmentalize**
-Create a new repo that takes this web framework where a user can get it and start working on a website right away.
-
 **Admin Backend Area**
 admin area with database tool? can be behind cloudflare auth etc
+
+**Compartmentalize**
+Create a new repo that takes this web framework where a user can get it and start working on a website right away.

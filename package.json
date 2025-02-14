@@ -10,10 +10,10 @@
     "singleQuote": true,
     "tabWidth": 4,
     "useTabs": true,
-    "htmlWhitespaceSensitivity": "strict",
+    "htmlWhitespaceSensitivity": "ignore",
     "singleAttributePerLine": false,
     "endOfLine": "auto",
-    "bracketSameLine": true
+    "bracketSameLine": false
   },
   "devDependencies": {
     "concurrently": "^9.1.2",
