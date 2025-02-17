@@ -17,6 +17,7 @@ sync warcraftlogs data tree
 **smol todos**
 Dark/Light mode?
 Get all raid images. Write a scrapper? I don't know how I would do that because the images I've gotten so far have come from official blizzard press release material and it's consistent. Maybe get images from wowhead, which could be more orderly
+ssh keys
 
 **BIG TODOs**
 

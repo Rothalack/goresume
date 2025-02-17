@@ -5,7 +5,7 @@
     "prod": "npx webpack --mode production --no-cache && npx tailwindcss -i ./static/css/styles.css -o ./static/css/output.css --minify"
   },
   "prettier": {
-    "printWidth": 180,
+    "printWidth": 240,
     "semi": true,
     "singleQuote": true,
     "tabWidth": 4,
