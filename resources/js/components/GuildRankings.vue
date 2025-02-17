@@ -203,7 +203,7 @@ export default {
 		<div class="max-w-sm mx-auto mt-5" v-if="!rankingData">
 			<h3 class="text-2xl mb-4">Search for a WoW Guild Ranking</h3>
 			<div class="mb-5" id="guild-input">
-				<label for="guild" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+				<label for="guild" class="block mb-2 text-sm font-medium text-white dark:text-white">
 					Guild Name
 				</label>
 				<input
@@ -217,7 +217,7 @@ export default {
 			</div>
 
 			<div class="mb-5" id="game-input">
-				<label for="game" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Game</label>
+				<label for="game" class="block mb-2 text-sm font-medium text-white dark:text-white">Game</label>
 				<select id="game" v-model="selectedGame" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 					<option v-for="option in logsData" :key="option.game_id" :value="option">
 						{{ option.game_name }}
@@ -226,7 +226,7 @@ export default {
 			</div>
 
 			<div class="mb-5" id="region-input" v-if="selectedGame">
-				<label for="region" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Region</label>
+				<label for="region" class="block mb-2 text-sm font-medium text-white dark:text-white">Region</label>
 				<select id="region" v-model="selectedRegion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 					<option v-for="option in selectedGame.regions" :key="option.region_id" :value="option">
 						{{ option.compact_name }}
@@ -235,7 +235,7 @@ export default {
 			</div>
 
 			<div class="mb-5" id="server-input" v-if="selectedRegion">
-				<label for="server" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Server</label>
+				<label for="server" class="block mb-2 text-sm font-medium text-white dark:text-white">Server</label>
 				<select id="server" v-model="selectedServer" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 					<option v-for="option in selectedRegion.servers" :key="option.server_id" :value="option">
 						{{ option.normalized_name }}
@@ -244,7 +244,7 @@ export default {
 			</div>
 
 			<div class="mb-5" id="expansion-input" v-if="selectedServer">
-				<label for="expansion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+				<label for="expansion" class="block mb-2 text-sm font-medium text-white dark:text-white">
 					Expansion
 				</label>
 				<select id="expansion" v-model="selectedExpansion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -255,7 +255,7 @@ export default {
 			</div>
 
 			<div class="mb-5" id="zone-input" v-if="selectedExpansion">
-				<label for="zone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Zone</label>
+				<label for="zone" class="block mb-2 text-sm font-medium text-white dark:text-white">Zone</label>
 				<select id="expansion" v-model="selectedZone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 					<option v-for="option in selectedExpansion.zones" :key="option.zone_id" :value="option">
 						{{ option.zone_name }}
@@ -264,7 +264,7 @@ export default {
 			</div>
 
 			<div class="mb-5" id="difficulty-input" v-if="selectedZone && selectedZone.difficulty && selectedZone.difficulty.length > 1">
-				<label for="difficulty" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+				<label for="difficulty" class="block mb-2 text-sm font-medium text-white dark:text-white">
 					Difficulty
 				</label>
 				<select id="difficulty" v-model="selectedDifficulty" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -275,7 +275,7 @@ export default {
 			</div>
 
 			<div class="mb-5" id="size-input" v-if="selectedDifficulty && selectedDifficulty.sizes && selectedDifficulty.sizes.length > 1">
-				<label for="size" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Size</label>
+				<label for="size" class="block mb-2 text-sm font-medium text-white dark:text-white">Size</label>
 				<select id="difficulty" v-model="selectedSize" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 					<option v-for="option in selectedDifficulty.sizes" :key="option.size" :value="option.size">
 						{{ option.size }}
