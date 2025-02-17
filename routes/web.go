@@ -1,6 +1,8 @@
 package routes
 
 import (
+	"goresume/config/middleware"
+	"goresume/controllers/auth"
 	"goresume/controllers/warcraftlogs"
 	"html/template"
 	"net/http"
@@ -30,6 +32,15 @@ func Routes(router *gin.Engine) {
 	router.StaticFile("/.well-known/security.txt", "./security.txt")
 	router.StaticFile("/humans.txt", "./humans.txt")
 	router.StaticFile("/ads.txt", "./ads.txt")
+
+	router.POST("/auth/register", auth.Register)
+	router.GET("/register", func(ctx *gin.Context) {
+		ctx.HTML(http.StatusOK, "auth/register", gin.H{
+			"title": "Register",
+		})
+	})
+	router.POST("/auth/login", auth.Login)
+	router.POST("/auth/logout", auth.Logout)
 
 	router.GET("/", func(ctx *gin.Context) {
 		ctx.HTML(http.StatusOK, "home", gin.H{
@@ -117,4 +128,13 @@ func Routes(router *gin.Engine) {
 			"data": resp,
 		})
 	})
+
+	protected := router.Group("/admin")
+	protected.Use(middleware.AuthRequired())
+	{
+		protected.GET("/dashboard", func(c *gin.Context) {
+			userID, _ := c.Get("user_id")
+			c.JSON(200, gin.H{"user_id": userID})
+		})
+	}
 }

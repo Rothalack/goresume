@@ -1,14 +1,13 @@
 package entities
 
-import (
-	"time"
-)
+import "time"
 
 type User struct {
-	Id        int       `db:"id,key,auto"`
-	Name      string    `db:"name"`
-	Email     string    `db:"email"`
-	Password  string    `db:"email"`
-	CreatedAt time.Time `db:"created_at"`
-	UpdatedAt time.Time `db:"updated_at"`
+	ID           int64     `json:"id"`
+	Email        string    `json:"email"`
+	UserName     *string   `json:"user_name,omitempty"`
+	PasswordHash string    `json:"-"`
+	CreatedAt    time.Time `json:"created_at"`
+	UpdatedAt    time.Time `json:"updated_at"`
+	GoogleID     *string   `json:"google_id,omitempty"`
 }
